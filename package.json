@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JustusPlays78/FiveV_Framework.git"
+    "url": "git+https://github.com/FiveV-Framework/fiveV_client"
   },
   "author": "Julscha",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JustusPlays78/FiveV_Framework/issues"
+    "url": "https://github.com/FiveV-Framework/fiveV_client/issues"
   },
-  "homepage": "https://github.com/JustusPlays78/FiveV_Framework#readme",
+  "homepage": "https://github.com/FiveV-Framework/fiveV_client#readme",
   "dependencies": {
     "@types/node": "^22.13.13",
     "esbuild": "^0.25.1",
