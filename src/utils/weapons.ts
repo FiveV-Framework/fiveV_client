@@ -113,7 +113,7 @@ export const FiveVWeapons : FiveVWeapon[] = [
         { name: "Extended Clip", Hash_Key: "COMPONENT_COMPACTRIFLE_CLIP_02", Hash: "0x59FF9BF8" },
         { name: "Drum Magazine", Hash_Key: "COMPONENT_COMPACTRIFLE_CLIP_03", Hash: "0xC607740E" },
     ]},
-    {name: "Battle Rifle", type: FiveVWeaponType.RIFLE, Hash: "WEAPON_BATTLERIFLE", Model_Hash_Key: "W_SL_BattleRifle_M32", DLC: GTADLC.MP2023} // To be done
+    //{name: "Battle Rifle", type: FiveVWeaponType.RIFLE, Hash: "WEAPON_BATTLERIFLE", Model_Hash_Key: "W_SL_BattleRifle_M32", DLC: GTADLC.MP2023} // To be done
 ]
 
 export const FiveVWeaponComponents : FiveVWeaponComponent[] = [
