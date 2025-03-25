@@ -1,6 +1,6 @@
 import {vehicleHandler} from "../@types/vehicle";
 
-export class Vehicle {
+export class FiveMVehicle {
     private vehicle: vehicleHandler;
 
     constructor(vehicle: vehicleHandler) {
