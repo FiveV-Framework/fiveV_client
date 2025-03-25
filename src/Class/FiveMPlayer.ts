@@ -1,6 +1,8 @@
 import {fiveMPlayer} from "../@types/player";
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
+import {FiveVWeapons} from "../utils/weapons";
+import {FiveVWeapon} from "../@types/weapon";
 
 export class FiveMPlayer {
     private player: fiveMPlayer;
@@ -120,6 +122,22 @@ export class FiveMPlayer {
      */
     set enableControl(key: number) {
         EnableControlAction(this.player, key, true);
+    }
+
+
+    /**
+     * Prüft, ob der Player eine Waffe in der Hand hält und wenn, dann gibt er die jeweilige {@link FiveVWeapon} zurück
+     * @returns {@link FiveVWeapon} der jeweiligen Waffe, welche der Spieler in der Hand hat. Sollte der Spieler keine Waffe in der Hand haben,
+     * gibt es ein undefined
+     */
+    get currentWeapon(): FiveVWeapon | undefined {
+        const [_, weapon] =  GetCurrentPedWeapon(this.player, true);
+        for (let i = 0; i < FiveVWeapons.length -1; i++) {
+            if (weapon === GetHashKey(FiveVWeapons[i].Hash)){
+                return FiveVWeapons[i];
+            }
+        }
+        return undefined;
     }
 
 }
