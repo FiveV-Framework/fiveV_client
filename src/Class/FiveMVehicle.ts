@@ -1,9 +1,9 @@
-import {vehicleHandler} from "../@types/vehicle";
+import {fiveMVehicle} from "../@types/vehicle";
 
 export class FiveMVehicle {
-    private vehicle: vehicleHandler;
+    private vehicle: fiveMVehicle;
 
-    constructor(vehicle: vehicleHandler) {
+    constructor(vehicle: fiveMVehicle) {
         this.vehicle = vehicle;
     }
 

@@ -1,4 +1,7 @@
-export type vehicleHandler = number;
+/**
+ * Das FiveM Vehicle (in einer Number)
+ */
+export type fiveMVehicle = number;
 
 export enum eVehicleLockState {
     // No specific lock state, vehicle behaves according to the game's default settings.
