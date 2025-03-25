@@ -1,0 +1,32 @@
+{
+  "name": "fivev_framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rimraf dist",
+    "start": "tsc && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JustusPlays78/FiveV_Framework.git"
+  },
+  "author": "Julscha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JustusPlays78/FiveV_Framework/issues"
+  },
+  "homepage": "https://github.com/JustusPlays78/FiveV_Framework#readme",
+  "dependencies": {
+    "@types/node": "^22.13.13",
+    "esbuild": "^0.25.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@citizenfx/client": "^2.0.13766-1",
+    "@types/node": "^14.14.37"
+  }
+}
