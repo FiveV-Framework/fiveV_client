@@ -68,4 +68,58 @@ export class FiveMPlayer {
         FreezeEntityPosition(this.player, enable);
     }
 
+    /**
+     * Gibt zurück, ob der Players Invincible (Unverwundbar) ist
+     * @returns true wenn der Players Invincible ist - false wenn nicht
+     * @see [GetPlayerInvincible](https://docs.fivem.net/natives/?_0x680C90EE) für weitere Informationen.
+     */
+    get invincible(): boolean {
+        return GetPlayerInvincible(this.player);
+    }
+
+    /**
+     * Ändert den Invincible (Unverwundbar) Status des Players
+     * @param enable true, wenn man den Player invincible (Unverwundbar) machen möchte, false, wenn man den Spieler wieder verwundbar machen möchte
+     * @see [SetEntityInvincible](https://docs.fivem.net/natives/?_0x3882114BDE571AD4) für weitere Informationen.
+     */
+    set invincible(enable: boolean) {
+        SetEntityInvincible(this.player, enable);
+    }
+
+    /**
+     * Gibt zurück, ob der Players Invisible (Unsichtbar) ist
+     * @returns true wenn der Players gefreezed ist - false wenn deaktiviert
+     * @see [IsEntityVisible](https://docs.fivem.net/natives/?_0x47D6F43D77935C75) für weitere Informationen.
+     */
+    get invisible (): boolean {
+        return IsEntityVisible(this.player);
+    }
+
+    /**
+     * Ändert den Invisible (Unsichtbar) Status des Players
+     * @param enable true, wenn man den Player invisible (Unsichtbar) machen möchte, false, wenn man den Spieler wieder visible machen möchte
+     * @see [SetEntityVisible](https://docs.fivem.net/natives/?_0xEA1C610A04DB6BBB) für weitere Informationen.
+     */
+    set invisible(enable: boolean) {
+        SetEntityVisible(this.player, enable, false);
+    }
+
+    /**
+     * Disabled einen bestimmten Key aus der Control_Action Liste
+     * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
+     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     */
+    set disableKey(key: number) {
+        DisableControlAction(this.player, key, true);
+    }
+
+    /**
+     * Enabled einen bestimmten Key aus der Control_Action Liste
+     * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
+     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     */
+    set enableControl(key: number) {
+        EnableControlAction(this.player, key, true);
+    }
+
 }
