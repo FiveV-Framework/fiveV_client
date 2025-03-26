@@ -109,41 +109,45 @@ export class FiveMPlayer {
 
     /**
      * Disabled einen bestimmten Key aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public disableKey(key: number | CONTROL_INPUTS_ACTION) {
-        DisableControlAction(1, key, true);
+    public disableKey(padIndex: number = 0, key: number | CONTROL_INPUTS_ACTION) {
+        DisableControlAction(padIndex, key, true);
     }
 
     /**
      * Enabled einen bestimmten Key aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public enableKey(key: number | CONTROL_INPUTS_ACTION) {
-        EnableControlAction(1, key, true);
+    public enableKey(padIndex: number = 0, key: number | CONTROL_INPUTS_ACTION) {
+        EnableControlAction(padIndex, key, true);
     }
 
     /**
      * Disabled bestimmte Keys aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * @param keys Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public disableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
+    public disableKeys(padIndex: number = 0, keys: number[] | CONTROL_INPUTS_ACTION[]) {
         for (let i = 0; i < keys.length - 1; i++) {
-            DisableControlAction(1, keys[i], true);
+            DisableControlAction(padIndex, keys[i], true);
         }
     }
 
     /**
      * Enabled bestimmte Keys aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * @param keys Array aus der Liste {@link CONTROL_INPUTS_ACTION} oder aus Nummern
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public enableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
+    public enableKeys(padIndex: number = 0, keys: number[] | CONTROL_INPUTS_ACTION[]) {
         for (let i = 0; i < keys.length - 1; i++) {
-            EnableControlAction(1, keys[i], true);
+            EnableControlAction(padIndex, keys[i], true);
         }
     }
 
@@ -222,10 +226,11 @@ export class FiveMPlayer {
     }
 
     /**
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * Disabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler nicht mehr attacken kann
      */
-    public disableAttack() {
-        this.disableKeys([CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+    public disableAttack(padIndex: number = 0) {
+        this.disableKeys(padIndex, [CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
             CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
             CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
             CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
@@ -236,10 +241,11 @@ export class FiveMPlayer {
     }
 
     /**
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * Enabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler wieder attacken kann
      */
-    public enableAttack() {
-        this.enableKeys([CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+    public enableAttack(padIndex: number = 0) {
+        this.enableKeys(padIndex, [CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
             CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
             CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
             CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
