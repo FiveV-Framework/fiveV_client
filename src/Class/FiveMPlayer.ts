@@ -1,4 +1,4 @@
-import {CONTROL_INPUTS_ACTION, fiveMPlayer, PEDCONFIGFLAGS} from "../@types/player";
+import {CONTROL_INPUTS_ACTION, fiveMPlayer, HUDCOMPONENT, PEDCONFIGFLAGS} from "../@types/player";
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
 import {FiveVWeapon} from "../@types/weapon";
@@ -248,5 +248,33 @@ export class FiveMPlayer {
             CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED, CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
             CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
         ]);
+    }
+
+    /**
+     * Hided HUDs for den Frame
+     * @param hub als number/{@link HUDCOMPONENT} oder als numberArray/{@link HUDCOMPONENT}Array
+     */
+    public static hideHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT) {
+        if (Array.isArray(hub)) {
+            for (let i = 0; i < hub.length -1; i++) {
+                HideHudComponentThisFrame(hub[i]);
+            }
+        } else {
+            HideHudComponentThisFrame(hub);
+        }
+    }
+
+    /**
+     * Zeigt HUDs for den Frame
+     * @param hub als number/{@link HUDCOMPONENT} oder als numberArray/{@link HUDCOMPONENT}Array
+     */
+    public static showHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT) {
+        if (Array.isArray(hub)) {
+            for (let i = 0; i < hub.length -1; i++) {
+                HideHudComponentThisFrame(hub[i]);
+            }
+        } else {
+            HideHudComponentThisFrame(hub);
+        }
     }
 }
