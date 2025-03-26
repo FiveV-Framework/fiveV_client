@@ -2,6 +2,7 @@ import {CONTROL_INPUTS_ACTION, fiveMPlayer, HUDCOMPONENT, PEDCONFIGFLAGS} from "
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
 import {FiveVWeapon} from "../@types/weapon";
+import {FiveMVehicle} from "./FiveMVehicle";
 
 export class FiveMPlayer {
 
@@ -53,6 +54,15 @@ export class FiveMPlayer {
             RequestCollisionAtCoord(newRotation.x, newRotation.y, newRotation.z);
             SetEntityRotation(PlayerPedId(), newRotation.x, newRotation.y, newRotation.z, 2, false);
         }
+    }
+
+    /**
+     * Gibt das Heading des Players zurück
+     * @returns Das Heading als number
+     * @see [GetEntityHeading](https://docs.fivem.net/natives/?_0x972CC383) für weitere Informationen.
+     */
+    static get heading() : number {
+        return GetEntityHeading(PlayerPedId());
     }
 
     /**
@@ -185,6 +195,14 @@ export class FiveMPlayer {
             }
         }*/
         return weapon;
+    }
+
+    /**
+     * Gibt das Fahrzeug, in welchem ein Spieler sich gerade befindet, zurück
+     * @returns {@link FiveMVehicle}
+     */
+    static get vehicle() : FiveMVehicle {
+        return new FiveMVehicle(GetVehiclePedIsIn(PlayerPedId(), false));
     }
 
     /**
@@ -330,6 +348,14 @@ export class FiveMPlayer {
      */
     static get isUnderWater() : boolean {
         return IsPedSwimmingUnderWater(PlayerPedId());
+    }
+
+    /**
+     * Prüft ob der Spieler im Fahrzeug sitzt
+     * @returns true - der Spieler ist im Fahrzeug, false - der Spieler ist nicht im Fahrzeug
+     */
+    static get isInVehicle() : boolean {
+        return IsPedInAnyVehicle(PlayerPedId(), true);
     }
 
 
