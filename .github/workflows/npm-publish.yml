@@ -13,11 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up npm registry
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install latest NPM
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: npm install
@@ -25,4 +28,4 @@ jobs:
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish
+        run: npm publish --workspace=packages
