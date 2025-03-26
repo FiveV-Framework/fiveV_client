@@ -8,7 +8,7 @@ export class FiveMPlayer {
     /**
      * Gibt die Position des Players zurück
      * @returns Die Position in einem {@link Vector3}.
-     * @see [GetntityCoords](https://docs.fivem.net/natives/?_0x3FEF770D40960D5A) / {@link TransformNumberArrayInVector3} für weitere Informationen.
+     * @see [GetntityCoords](https://docs.fivem.net/natives/?_0x3FEF770D40960D5A) für weitere Informationen.
      */
     static get position(): Vector3 {
         return TransformNumberArrayInVector3(GetEntityCoords(PlayerPedId(), true));
@@ -27,6 +27,31 @@ export class FiveMPlayer {
         } else {
             RequestCollisionAtCoord(newPosition.x, newPosition.y, newPosition.z);
             SetEntityCoords(PlayerPedId(), newPosition.x, newPosition.y, newPosition.z, false, false, false, false);
+        }
+    }
+
+    /**
+     * Gibt die Rotation des Players zurück
+     * @returns Die Rotation in einem {@link Vector3}.
+     * @see [GetEntityRotation](https://docs.fivem.net/natives/?_0x8FF45B04) für weitere Informationen.
+     */
+    static get rotation(): Vector3 {
+        return TransformNumberArrayInVector3(GetEntityRotation(PlayerPedId(),2));
+    }
+
+    /**
+     * Setzt die Rotation des Players.
+     * @param newRotation Die Rotation in einem {@link Vector3} oder einem NumberArray.
+     * @see [SetEntityRotation](https://docs.fivem.net/natives/?_0xA345EFE) und [RequestCollisionAtCoord](https://docs.fivem.net/natives/?_0x07503F7948F491A7) für weitere Informationen.
+     */
+    static set rotation(newRotation: Vector3 | [x: number, y: number, z: number]) {
+        if (Array.isArray(newRotation)) {
+            const [x, y, z] = newRotation;
+            RequestCollisionAtCoord(x, y, z);
+            SetEntityRotation(PlayerPedId(), x, y, z, 2, false);
+        } else {
+            RequestCollisionAtCoord(newRotation.x, newRotation.y, newRotation.z);
+            SetEntityRotation(PlayerPedId(), newRotation.x, newRotation.y, newRotation.z, 2, false);
         }
     }
 
@@ -277,4 +302,11 @@ export class FiveMPlayer {
             HideHudComponentThisFrame(hub);
         }
     }
+
+
+
+
+    // WHERE IS PLAYER
+
+
 }
