@@ -1,4 +1,4 @@
-import {fiveMPlayer, PEDCONFIGFLAGS} from "../@types/player";
+import {CONTROL_INPUTS_ACTION, fiveMPlayer, PEDCONFIGFLAGS} from "../@types/player";
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
 import {FiveVWeapon} from "../@types/weapon";
@@ -112,7 +112,7 @@ export class FiveMPlayer {
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public disableKey(key: number) {
+    public disableKey(key: number | CONTROL_INPUTS_ACTION) {
         DisableControlAction(this.player, key, true);
     }
 
@@ -121,8 +121,30 @@ export class FiveMPlayer {
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public enableKey(key: number) {
+    public enableKey(key: number | CONTROL_INPUTS_ACTION) {
         EnableControlAction(this.player, key, true);
+    }
+
+    /**
+     * Disabled bestimmte Keys aus der Control_Action Liste
+     * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
+     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     */
+    public disableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
+        for (let i = 0; i < keys.length -1; i++) {
+            DisableControlAction(this.player, keys[i], true);
+        }
+    }
+
+    /**
+     * Enabled bestimmte Keys aus der Control_Action Liste
+     * @param key Array aus der Liste {@link CONTROL_INPUTS_ACTION} oder aus Nummern
+     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     */
+    public enableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
+        for (let i = 0; i < keys.length -1; i++) {
+            EnableControlAction(this.player, keys[i], true);
+        }
     }
 
 
