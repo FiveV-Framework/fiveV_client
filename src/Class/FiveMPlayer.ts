@@ -127,7 +127,7 @@ export class FiveMPlayer {
 
     /**
      * Disabled bestimmte Keys aus der Control_Action Liste
-     * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
+     * @param keys Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
     public disableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
@@ -138,7 +138,7 @@ export class FiveMPlayer {
 
     /**
      * Enabled bestimmte Keys aus der Control_Action Liste
-     * @param key Array aus der Liste {@link CONTROL_INPUTS_ACTION} oder aus Nummern
+     * @param keys Array aus der Liste {@link CONTROL_INPUTS_ACTION} oder aus Nummern
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
     public enableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
@@ -179,6 +179,28 @@ export class FiveMPlayer {
      */
     public disableConfigFlag(flagId: number | PEDCONFIGFLAGS) {
         SetPedConfigFlag(this.player, flagId, false);
+    }
+
+    /**
+     * Enabled bestimmte PED Config Flags
+     * @param flagIds Nummer Array  der Config Flag oder {@link PEDCONFIGFLAGS} Array
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     */
+    public enableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
+        for (let i = 0; i < flagIds.length -1; i++) {
+            SetPedConfigFlag(this.player, flagIds[i], true);
+        }
+    }
+
+    /**
+     * Disabled bestimmte PED Config Flags
+     * @param flagIds Nummer Array der Config Flag oder {@link PEDCONFIGFLAGS} Array
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     */
+    public disableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
+        for (let i = 0; i < flagIds.length -1; i++) {
+            SetPedConfigFlag(this.player, flagIds[i], false);
+        }
     }
 
     /**
