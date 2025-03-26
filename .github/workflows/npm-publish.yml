@@ -20,13 +20,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Setup pnpm
-        run: npm install -g pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Test
-        run: pnpm test
+        run: npm install
 
       - name: Check the version
         id: check
@@ -49,7 +43,7 @@ jobs:
           fi
 
       - name: Build
-        run: pnpm build
+        run: npm build
         if: steps.check.outputs.version_changed == 'true'
 
       - name: Publish
