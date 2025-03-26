@@ -308,5 +308,30 @@ export class FiveMPlayer {
 
     // WHERE IS PLAYER
 
+    /**
+     * Prüft ob der Spieler gerade fällt
+     * @returns true - der Spieler fällt, false - der Spieler fällt nicht
+     */
+    static get isFalling() : boolean {
+        return IsPedFalling(PlayerPedId());
+    }
+
+    /**
+     * Prüft ob der Spieler gerade im Wasser ist
+     * @returns true - der Spieler ist im Wasser, false - der Spieler ist nicht im Wasser
+     */
+    static get isInWater() : boolean {
+        return IsEntityInWater(PlayerPedId());
+    }
+
+    /**
+     * Prüft ob der Spieler unter Wasser schwimmt
+     * @returns true - der Spieler schwimmt unter Wasser, false - der Spieler schwimmt nicht unter Wasser
+     */
+    static get isUnderWater() : boolean {
+        return IsPedSwimmingUnderWater(PlayerPedId());
+    }
+
+
 
 }
