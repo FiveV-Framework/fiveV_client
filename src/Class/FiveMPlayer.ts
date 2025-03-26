@@ -66,7 +66,7 @@ export class FiveMPlayer {
     }
 
     /**
-     * Gibt das Heading des Players zurück
+     * Setzt das Heading des Players
      * @param newheading
      * @see [SetEntityHeading](https://docs.fivem.net/natives/?_0xE0FF064D) für weitere Informationen.
      */
