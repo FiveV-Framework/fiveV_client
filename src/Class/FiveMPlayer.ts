@@ -66,6 +66,24 @@ export class FiveMPlayer {
     }
 
     /**
+     * Setzt das Heading des Players
+     * @param newheading
+     * @see [SetEntityHeading](https://docs.fivem.net/natives/?_0xE0FF064D) für weitere Informationen.
+     */
+    static set heading(newheading: number) {
+        SetEntityHeading(PlayerPedId(), newheading);
+    }
+
+    /**
+     * Gibt das Kamera Heading des Players zurück
+     * @returns Das Heading als number
+     * @see [GetGameplayCamRelativeHeading](https://docs.fivem.net/natives/?_0x743607648ADD4587) für weitere Informationen.
+     */
+    static get camHeading() : number {
+        return GetGameplayCamRelativeHeading();
+    }
+
+    /**
      * Gibt zurück, ob die Collision des Players disabled ist
      * @returns true wenn die Collision aktiviert ist - false wenn deaktiviert
      * @see [GetEntityCollisionDisabled](https://docs.fivem.net/natives/?_0xCCF1E97BEFDAE480) / {@link TransformNumberArrayInVector3} für weitere Informationen.
