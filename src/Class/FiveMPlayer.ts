@@ -94,7 +94,7 @@ export class FiveMPlayer {
      * @returns true wenn der Players gefreezed ist - false wenn deaktiviert
      * @see [IsEntityVisible](https://docs.fivem.net/natives/?_0x47D6F43D77935C75) für weitere Informationen.
      */
-    get invisible (): boolean {
+    get invisible(): boolean {
         return IsEntityVisible(this.player);
     }
 
@@ -113,7 +113,7 @@ export class FiveMPlayer {
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
     public disableKey(key: number | CONTROL_INPUTS_ACTION) {
-        DisableControlAction(this.player, key, true);
+        DisableControlAction(1, key, true);
     }
 
     /**
@@ -122,7 +122,7 @@ export class FiveMPlayer {
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
     public enableKey(key: number | CONTROL_INPUTS_ACTION) {
-        EnableControlAction(this.player, key, true);
+        EnableControlAction(1, key, true);
     }
 
     /**
@@ -131,8 +131,8 @@ export class FiveMPlayer {
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
     public disableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
-        for (let i = 0; i < keys.length -1; i++) {
-            DisableControlAction(this.player, keys[i], true);
+        for (let i = 0; i < keys.length - 1; i++) {
+            DisableControlAction(1, keys[i], true);
         }
     }
 
@@ -142,8 +142,8 @@ export class FiveMPlayer {
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
     public enableKeys(keys: number[] | CONTROL_INPUTS_ACTION[]) {
-        for (let i = 0; i < keys.length -1; i++) {
-            EnableControlAction(this.player, keys[i], true);
+        for (let i = 0; i < keys.length - 1; i++) {
+            EnableControlAction(1, keys[i], true);
         }
     }
 
@@ -154,7 +154,7 @@ export class FiveMPlayer {
      * gibt es einen leeren String
      */
     get currentWeapon(): number {
-        const [_, weapon] =  GetCurrentPedWeapon(this.player, true);
+        const [_, weapon] = GetCurrentPedWeapon(this.player, true);
         /*for (let i = 0; i < FiveVWeapons.length -1; i++) {
             if (weapon === GetHashKey(FiveVWeapons[i].Hash)){
                 return FiveVWeapons[i];
@@ -187,7 +187,7 @@ export class FiveMPlayer {
      * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
      */
     public enableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
-        for (let i = 0; i < flagIds.length -1; i++) {
+        for (let i = 0; i < flagIds.length - 1; i++) {
             SetPedConfigFlag(this.player, flagIds[i], true);
         }
     }
@@ -198,7 +198,7 @@ export class FiveMPlayer {
      * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
      */
     public disableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
-        for (let i = 0; i < flagIds.length -1; i++) {
+        for (let i = 0; i < flagIds.length - 1; i++) {
             SetPedConfigFlag(this.player, flagIds[i], false);
         }
     }
@@ -221,4 +221,31 @@ export class FiveMPlayer {
         return activeFlags;
     }
 
+    /**
+     * Disabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler nicht mehr attacken kann
+     */
+    public disableAttack() {
+        this.disableKeys([CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED, CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
+        ]);
+    }
+
+    /**
+     * Enabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler wieder attacken kann
+     */
+    public enableAttack() {
+        this.enableKeys([CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED, CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
+        ]);
+    }
 }
