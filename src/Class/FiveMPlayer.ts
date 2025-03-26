@@ -1,14 +1,15 @@
-import {CONTROL_INPUTS_ACTION, fiveMPlayer, PEDCONFIGFLAGS} from "../@types/player";
+import {CONTROL_INPUTS_ACTION, fiveMPlayer, HUDCOMPONENT, PEDCONFIGFLAGS} from "../@types/player";
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
 import {FiveVWeapon} from "../@types/weapon";
+import {FiveMVehicle} from "./FiveMVehicle";
 
 export class FiveMPlayer {
 
     /**
      * Gibt die Position des Players zurück
      * @returns Die Position in einem {@link Vector3}.
-     * @see [GetntityCoords](https://docs.fivem.net/natives/?_0x3FEF770D40960D5A) / {@link TransformNumberArrayInVector3} für weitere Informationen.
+     * @see [GetntityCoords](https://docs.fivem.net/natives/?_0x3FEF770D40960D5A) für weitere Informationen.
      */
     static get position(): Vector3 {
         return TransformNumberArrayInVector3(GetEntityCoords(PlayerPedId(), true));
@@ -28,6 +29,58 @@ export class FiveMPlayer {
             RequestCollisionAtCoord(newPosition.x, newPosition.y, newPosition.z);
             SetEntityCoords(PlayerPedId(), newPosition.x, newPosition.y, newPosition.z, false, false, false, false);
         }
+    }
+
+    /**
+     * Gibt die Rotation des Players zurück
+     * @returns Die Rotation in einem {@link Vector3}.
+     * @see [GetEntityRotation](https://docs.fivem.net/natives/?_0x8FF45B04) für weitere Informationen.
+     */
+    static get rotation(): Vector3 {
+        return TransformNumberArrayInVector3(GetEntityRotation(PlayerPedId(),2));
+    }
+
+    /**
+     * Setzt die Rotation des Players.
+     * @param newRotation Die Rotation in einem {@link Vector3} oder einem NumberArray.
+     * @see [SetEntityRotation](https://docs.fivem.net/natives/?_0xA345EFE) und [RequestCollisionAtCoord](https://docs.fivem.net/natives/?_0x07503F7948F491A7) für weitere Informationen.
+     */
+    static set rotation(newRotation: Vector3 | [x: number, y: number, z: number]) {
+        if (Array.isArray(newRotation)) {
+            const [x, y, z] = newRotation;
+            RequestCollisionAtCoord(x, y, z);
+            SetEntityRotation(PlayerPedId(), x, y, z, 2, false);
+        } else {
+            RequestCollisionAtCoord(newRotation.x, newRotation.y, newRotation.z);
+            SetEntityRotation(PlayerPedId(), newRotation.x, newRotation.y, newRotation.z, 2, false);
+        }
+    }
+
+    /**
+     * Gibt das Heading des Players zurück
+     * @returns Das Heading als number
+     * @see [GetEntityHeading](https://docs.fivem.net/natives/?_0x972CC383) für weitere Informationen.
+     */
+    static get heading() : number {
+        return GetEntityHeading(PlayerPedId());
+    }
+
+    /**
+     * Setzt das Heading des Players
+     * @param newheading
+     * @see [SetEntityHeading](https://docs.fivem.net/natives/?_0xE0FF064D) für weitere Informationen.
+     */
+    static set heading(newheading: number) {
+        SetEntityHeading(PlayerPedId(), newheading);
+    }
+
+    /**
+     * Gibt das Kamera Heading des Players zurück
+     * @returns Das Heading als number
+     * @see [GetGameplayCamRelativeHeading](https://docs.fivem.net/natives/?_0x743607648ADD4587) für weitere Informationen.
+     */
+    static get camHeading() : number {
+        return GetGameplayCamRelativeHeading();
     }
 
     /**
@@ -163,6 +216,14 @@ export class FiveMPlayer {
     }
 
     /**
+     * Gibt das Fahrzeug, in welchem ein Spieler sich gerade befindet, zurück
+     * @returns {@link FiveMVehicle}
+     */
+    static get vehicle() : FiveMVehicle {
+        return new FiveMVehicle(GetVehiclePedIsIn(PlayerPedId(), false));
+    }
+
+    /**
      * Enabled eine bestimmte PED Config Flag
      * @param flagId Nummer der Config Flag oder {@link PEDCONFIGFLAGS}
      * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
@@ -249,4 +310,72 @@ export class FiveMPlayer {
             CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
         ]);
     }
+
+    /**
+     * Hided HUDs for den Frame
+     * @param hub als number/{@link HUDCOMPONENT} oder als numberArray/{@link HUDCOMPONENT}Array
+     */
+    public static hideHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT) {
+        if (Array.isArray(hub)) {
+            for (let i = 0; i < hub.length -1; i++) {
+                HideHudComponentThisFrame(hub[i]);
+            }
+        } else {
+            HideHudComponentThisFrame(hub);
+        }
+    }
+
+    /**
+     * Zeigt HUDs for den Frame
+     * @param hub als number/{@link HUDCOMPONENT} oder als numberArray/{@link HUDCOMPONENT}Array
+     */
+    public static showHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT) {
+        if (Array.isArray(hub)) {
+            for (let i = 0; i < hub.length -1; i++) {
+                HideHudComponentThisFrame(hub[i]);
+            }
+        } else {
+            HideHudComponentThisFrame(hub);
+        }
+    }
+
+
+
+
+    // WHERE IS PLAYER
+
+    /**
+     * Prüft ob der Spieler gerade fällt
+     * @returns true - der Spieler fällt, false - der Spieler fällt nicht
+     */
+    static get isFalling() : boolean {
+        return IsPedFalling(PlayerPedId());
+    }
+
+    /**
+     * Prüft ob der Spieler gerade im Wasser ist
+     * @returns true - der Spieler ist im Wasser, false - der Spieler ist nicht im Wasser
+     */
+    static get isInWater() : boolean {
+        return IsEntityInWater(PlayerPedId());
+    }
+
+    /**
+     * Prüft ob der Spieler unter Wasser schwimmt
+     * @returns true - der Spieler schwimmt unter Wasser, false - der Spieler schwimmt nicht unter Wasser
+     */
+    static get isUnderWater() : boolean {
+        return IsPedSwimmingUnderWater(PlayerPedId());
+    }
+
+    /**
+     * Prüft ob der Spieler im Fahrzeug sitzt
+     * @returns true - der Spieler ist im Fahrzeug, false - der Spieler ist nicht im Fahrzeug
+     */
+    static get isInVehicle() : boolean {
+        return IsPedInAnyVehicle(PlayerPedId(), true);
+    }
+
+
+
 }
