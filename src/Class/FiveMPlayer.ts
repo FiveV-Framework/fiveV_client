@@ -112,7 +112,7 @@ export class FiveMPlayer {
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    set disableKey(key: number) {
+    public disableKey(key: number) {
         DisableControlAction(this.player, key, true);
     }
 
@@ -121,7 +121,7 @@ export class FiveMPlayer {
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    set enableControl(key: number) {
+    public enableKey(key: number) {
         EnableControlAction(this.player, key, true);
     }
 
