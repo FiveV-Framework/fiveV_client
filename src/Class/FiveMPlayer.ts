@@ -1,4 +1,4 @@
-import {fiveMPlayer, PEDCONFIGFLAGS} from "../@types/player";
+import {CONTROL_INPUTS_ACTION, fiveMPlayer, PEDCONFIGFLAGS} from "../@types/player";
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
 import {FiveVWeapon} from "../@types/weapon";
@@ -94,7 +94,7 @@ export class FiveMPlayer {
      * @returns true wenn der Players gefreezed ist - false wenn deaktiviert
      * @see [IsEntityVisible](https://docs.fivem.net/natives/?_0x47D6F43D77935C75) für weitere Informationen.
      */
-    get invisible (): boolean {
+    get invisible(): boolean {
         return IsEntityVisible(this.player);
     }
 
@@ -109,20 +109,46 @@ export class FiveMPlayer {
 
     /**
      * Disabled einen bestimmten Key aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public disableKey(key: number) {
-        DisableControlAction(this.player, key, true);
+    public disableKey(padIndex: number = 0, key: number | CONTROL_INPUTS_ACTION) {
+        DisableControlAction(padIndex, key, true);
     }
 
     /**
      * Enabled einen bestimmten Key aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
      * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
      * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
      */
-    public enableKey(key: number) {
-        EnableControlAction(this.player, key, true);
+    public enableKey(padIndex: number = 0, key: number | CONTROL_INPUTS_ACTION) {
+        EnableControlAction(padIndex, key, true);
+    }
+
+    /**
+     * Disabled bestimmte Keys aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
+     * @param keys Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
+     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     */
+    public disableKeys(padIndex: number = 0, keys: number[] | CONTROL_INPUTS_ACTION[]) {
+        for (let i = 0; i < keys.length - 1; i++) {
+            DisableControlAction(padIndex, keys[i], true);
+        }
+    }
+
+    /**
+     * Enabled bestimmte Keys aus der Control_Action Liste
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
+     * @param keys Array aus der Liste {@link CONTROL_INPUTS_ACTION} oder aus Nummern
+     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     */
+    public enableKeys(padIndex: number = 0, keys: number[] | CONTROL_INPUTS_ACTION[]) {
+        for (let i = 0; i < keys.length - 1; i++) {
+            EnableControlAction(padIndex, keys[i], true);
+        }
     }
 
 
@@ -132,7 +158,7 @@ export class FiveMPlayer {
      * gibt es einen leeren String
      */
     get currentWeapon(): number {
-        const [_, weapon] =  GetCurrentPedWeapon(this.player, true);
+        const [_, weapon] = GetCurrentPedWeapon(this.player, true);
         /*for (let i = 0; i < FiveVWeapons.length -1; i++) {
             if (weapon === GetHashKey(FiveVWeapons[i].Hash)){
                 return FiveVWeapons[i];
@@ -160,6 +186,28 @@ export class FiveMPlayer {
     }
 
     /**
+     * Enabled bestimmte PED Config Flags
+     * @param flagIds Nummer Array  der Config Flag oder {@link PEDCONFIGFLAGS} Array
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     */
+    public enableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
+        for (let i = 0; i < flagIds.length - 1; i++) {
+            SetPedConfigFlag(this.player, flagIds[i], true);
+        }
+    }
+
+    /**
+     * Disabled bestimmte PED Config Flags
+     * @param flagIds Nummer Array der Config Flag oder {@link PEDCONFIGFLAGS} Array
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     */
+    public disableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
+        for (let i = 0; i < flagIds.length - 1; i++) {
+            SetPedConfigFlag(this.player, flagIds[i], false);
+        }
+    }
+
+    /**
      * Prüft die aktiven Config Flags einer Person und gibt alle aktiven dann in Form eines Arrays zurück
      * @returns Ein Array mit den aktiven {@link PEDCONFIGFLAGS} des Spielers
      */
@@ -177,4 +225,33 @@ export class FiveMPlayer {
         return activeFlags;
     }
 
+    /**
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
+     * Disabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler nicht mehr attacken kann
+     */
+    public disableAttack(padIndex: number = 0) {
+        this.disableKeys(padIndex, [CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED, CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
+        ]);
+    }
+
+    /**
+     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
+     * Enabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler wieder attacken kann
+     */
+    public enableAttack(padIndex: number = 0) {
+        this.enableKeys(padIndex, [CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED, CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
+        ]);
+    }
 }
