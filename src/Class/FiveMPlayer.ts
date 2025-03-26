@@ -1,7 +1,6 @@
-import {fiveMPlayer} from "../@types/player";
+import {fiveMPlayer, PEDCONFIGFLAGS} from "../@types/player";
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
-import {FiveVWeapons} from "../utils/weapons";
 import {FiveVWeapon} from "../@types/weapon";
 
 export class FiveMPlayer {
@@ -28,8 +27,10 @@ export class FiveMPlayer {
     set position(newPosition: Vector3 | [x: number, y: number, z: number]) {
         if (Array.isArray(newPosition)) {
             const [x, y, z] = newPosition;
+            RequestCollisionAtCoord(x, y, z);
             SetEntityCoords(this.player, x, y, z, false, false, false, false);
         } else {
+            RequestCollisionAtCoord(newPosition.x, newPosition.y, newPosition.z);
             SetEntityCoords(this.player, newPosition.x, newPosition.y, newPosition.z, false, false, false, false);
         }
     }
@@ -127,17 +128,53 @@ export class FiveMPlayer {
 
     /**
      * Prüft, ob der Player eine Waffe in der Hand hält und wenn, dann gibt er die jeweilige {@link FiveVWeapon} zurück
-     * @returns {@link FiveVWeapon} der jeweiligen Waffe, welche der Spieler in der Hand hat. Sollte der Spieler keine Waffe in der Hand haben,
-     * gibt es ein undefined
+     * @returns die Nummer des Hashkeys (Der Link zur Waffe kommt später{@link FiveVWeapon}) der jeweiligen Waffe, welche der Spieler in der Hand hat. Sollte der Spieler keine Waffe in der Hand haben,
+     * gibt es einen leeren String
      */
-    get currentWeapon(): FiveVWeapon | undefined {
+    get currentWeapon(): number {
         const [_, weapon] =  GetCurrentPedWeapon(this.player, true);
-        for (let i = 0; i < FiveVWeapons.length -1; i++) {
+        /*for (let i = 0; i < FiveVWeapons.length -1; i++) {
             if (weapon === GetHashKey(FiveVWeapons[i].Hash)){
                 return FiveVWeapons[i];
             }
+        }*/
+        return weapon;
+    }
+
+    /**
+     * Enabled eine bestimmte PED Config Flag
+     * @param flagId Nummer der Config Flag oder {@link PEDCONFIGFLAGS}
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     */
+    public enableConfigFlag(flagId: number | PEDCONFIGFLAGS) {
+        SetPedConfigFlag(this.player, flagId, true);
+    }
+
+    /**
+     * Disabled eine bestimmte PED Config Flag
+     * @param flagId Nummer der Config Flag oder {@link PEDCONFIGFLAGS}
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     */
+    public disableConfigFlag(flagId: number | PEDCONFIGFLAGS) {
+        SetPedConfigFlag(this.player, flagId, false);
+    }
+
+    /**
+     * Prüft die aktiven Config Flags einer Person und gibt alle aktiven dann in Form eines Arrays zurück
+     * @returns Ein Array mit den aktiven {@link PEDCONFIGFLAGS} des Spielers
+     */
+    get activeConfigFlags(): PEDCONFIGFLAGS[] {
+        const activeFlags: PEDCONFIGFLAGS[] = [];
+
+        for (let flag in PEDCONFIGFLAGS) {
+            const flagValue = Number(flag);
+            if (!isNaN(flagValue)) {
+                if (GetPedConfigFlag(this.player, flagValue, true)) {
+                    activeFlags.push(flagValue as PEDCONFIGFLAGS);
+                }
+            }
         }
-        return undefined;
+        return activeFlags;
     }
 
 }

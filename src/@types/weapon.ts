@@ -7,10 +7,10 @@ export interface FiveVWeapon {
     Model_Hash_Key: string;
     DLC: GTADLC;
     Description: string;
-    Components: FiveVWeaponComponent[];
+    Components: string[];
 }
 
-export interface FiveVWeaponComponent {
+export interface FiveVWeaponComponent { //TO BE USED LATER
     name: string;
     Hash_Key: string;
     Hash: string;
