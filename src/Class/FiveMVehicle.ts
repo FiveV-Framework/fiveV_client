@@ -1,4 +1,4 @@
-import {fiveMVehicle} from "../@types/vehicle";
+import {fiveMVehicle, VEHICLELOCKSTATE} from "../@types/vehicle";
 
 export class FiveMVehicle {
     private vehicle: fiveMVehicle;
