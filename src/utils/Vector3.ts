@@ -9,62 +9,62 @@ export class Vector3 {
         this.z = z;
     }
 
-    public add(v1: Vector3, v2: number | Vector3): Vector3 {
+    public add(v2: number | Vector3): Vector3 {
         return typeof v2 === 'number'
-            ? new Vector3(v1.x + v2, v1.y + v2, v1.z + v2)
-            : new Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+            ? new Vector3(this.x + v2, this.y + v2, this.z + v2)
+            : new Vector3(this.x + v2.x, this.y + v2.y, this.z + v2.z);
     }
 
     public addition(v: number | Vector3): Vector3 {
-        return this.add(this, v);
+        return this.add(v);
     }
 
-    public sub(v1: Vector3, v2: Vector3): Vector3 {
-        return new Vector3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+    public sub(v2: Vector3): Vector3 {
+        return new Vector3(this.x - v2.x, this.y - v2.y, this.z - v2.z);
     }
 
     public subtract(v: Vector3): Vector3 {
-        return this.sub(this, v);
+        return this.sub(v);
     }
 
-    public mul(v1: Vector3, v2: number | Vector3): Vector3 {
+    public mul(v2: number | Vector3): Vector3 {
         return typeof v2 === 'number'
-            ? new Vector3(v1.x * v2, v1.y * v2, v1.z * v2)
-            : new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
+            ? new Vector3(this.x * v2, this.y * v2, this.z * v2)
+            : new Vector3(this.x * v2.x, this.y * v2.y, this.z * v2.z);
     }
 
     public multiply(v: number | Vector3): Vector3 {
-        return this.mul(this, v);
+        return this.mul(v);
     }
 
-    public div(v1: Vector3, v2: number | Vector3): Vector3 {
+    public div(v2: number | Vector3): Vector3 {
         return typeof v2 === 'number'
-            ? new Vector3(v1.x / v2, v1.y / v2, v1.z / v2)
-            : new Vector3(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z);
+            ? new Vector3(this.x / v2, this.y / v2, this.z / v2)
+            : new Vector3(this.x / v2.x, this.y / v2.y, this.z / v2.z);
     }
 
     public divide(v: number | Vector3): Vector3 {
-        return this.div(this, v);
+        return this.div(v);
     }
 
-    public productDot(v1: Vector3, v2: Vector3): number {
-        return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+    public productDot(v2: Vector3): number {
+        return this.x * v2.x + this.y * v2.y + this.z * v2.z;
     }
 
     public dot(v: Vector3): number {
-        return this.productDot(this, v);
+        return this.productDot(v);
     }
 
-    public productCross(v1: Vector3, v2: Vector3): Vector3 {
+    public productCross(v2: Vector3): Vector3 {
         return new Vector3(
-            v1.y * v2.z - v1.z * v2.y,
-            v1.z * v2.x - v1.x * v2.z,
-            v1.x * v2.y - v1.y * v2.x
+            this.y * v2.z - this.z * v2.y,
+            this.z * v2.x - this.x * v2.z,
+            this.x * v2.y - this.y * v2.x
         );
     }
 
     public cross(v: Vector3): Vector3 {
-        return this.productCross(this, v);
+        return this.productCross(v);
     }
 
     public normalizeVector(): Vector3 {
