@@ -38,6 +38,8 @@ export declare class FiveMPlayer {
     static get activeConfigFlags(): PEDCONFIGFLAGS[];
     public static disableAttack(padIndex?: number): void;
     public static enableAttack(padIndex?: number): void;
+    public static disableFiring(): void;
+    public static enableFiring(): void;
     public static hideHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT): void;
     public static showHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT): void;
 
@@ -47,6 +49,7 @@ export declare class FiveMPlayer {
     static get isInWater(): boolean;
     static get isUnderWater(): boolean;
     static get isInVehicle(): boolean;
+    static get isArmed(): boolean;
 }
 export declare class FiveMVehicle {
     private vehicle: fiveMVehicle;
