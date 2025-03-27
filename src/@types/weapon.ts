@@ -2,7 +2,7 @@ import {GTADLC} from "../utils/ungrouped";
 
 export interface FiveVWeapon {
     name: string;
-    type: FiveVWeaponType;
+    type: WEAPONTYPE;
     Hash: string;
     Model_Hash_Key: string;
     DLC: GTADLC;
@@ -16,7 +16,7 @@ export interface FiveVWeaponComponent { //TO BE USED LATER
     Hash: string;
 }
 
-export enum FiveVWeaponType {
+export enum WEAPONTYPE {
     UNARMED,
     FIREEXTINGUISHER,
     PETROLCAN,

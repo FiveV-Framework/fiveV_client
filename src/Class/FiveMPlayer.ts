@@ -340,10 +340,7 @@ export class FiveMPlayer {
     }
 
 
-
-
     // WHERE IS PLAYER
-
     /**
      * Prüft ob der Spieler gerade fällt
      * @returns true - der Spieler fällt, false - der Spieler fällt nicht
@@ -375,7 +372,4 @@ export class FiveMPlayer {
     static get isInVehicle() : boolean {
         return IsPedInAnyVehicle(PlayerPedId(), true);
     }
-
-
-
 }

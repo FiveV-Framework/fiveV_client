@@ -3,7 +3,7 @@
  */
 export type fiveMVehicle = number;
 
-export enum eVehicleLockState {
+export enum VEHICLELOCKSTATE {
     // No specific lock state, vehicle behaves according to the game's default settings.
     VEHICLELOCK_NONE = 0,
     // Vehicle is fully unlocked, allowing free entry by players and NPCs.
