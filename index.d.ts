@@ -1,10 +1,10 @@
-import {FiveMPlayer} from './Class/FiveMPlayer';
-import {FiveMVehicle} from "./Class/FiveMVehicle";
-import {Vector3} from "./utils/Vector3";
-import {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION} from "./@types/player";
-import {VEHICLELOCKSTATE} from "./@types/vehicle";
-import { WEAPONTYPE } from "./@types/weapon";
-import { Utils } from "utils/network"
+import {FiveMPlayer} from './src/Class/FiveMPlayer';
+import {FiveMVehicle} from "./src/Class/FiveMVehicle";
+import {Vector3} from "./src/utils/Vector3";
+import {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION} from "./src/@types/player";
+import {VEHICLELOCKSTATE} from "./src/@types/vehicle";
+import { WEAPONTYPE } from "./src/@types/weapon";
+import { Utils } from "src/utils/network"
 
 
 export { HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION, VEHICLELOCKSTATE, WEAPONTYPE };
