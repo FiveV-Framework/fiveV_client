@@ -9,53 +9,53 @@ export class Vector3 {
         this.z = z;
     }
 
-    public static add(v1: Vector3, v2: number | Vector3): Vector3 {
+    public add(v1: Vector3, v2: number | Vector3): Vector3 {
         return typeof v2 === 'number'
             ? new Vector3(v1.x + v2, v1.y + v2, v1.z + v2)
             : new Vector3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
     }
 
     public addition(v: number | Vector3): Vector3 {
-        return Vector3.add(this, v);
+        return this.add(this, v);
     }
 
-    public static sub(v1: Vector3, v2: Vector3): Vector3 {
+    public sub(v1: Vector3, v2: Vector3): Vector3 {
         return new Vector3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
     }
 
     public subtract(v: Vector3): Vector3 {
-        return Vector3.sub(this, v);
+        return this.sub(this, v);
     }
 
-    public static mul(v1: Vector3, v2: number | Vector3): Vector3 {
+    public mul(v1: Vector3, v2: number | Vector3): Vector3 {
         return typeof v2 === 'number'
             ? new Vector3(v1.x * v2, v1.y * v2, v1.z * v2)
             : new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
     }
 
     public multiply(v: number | Vector3): Vector3 {
-        return Vector3.mul(this, v);
+        return this.mul(this, v);
     }
 
-    public static div(v1: Vector3, v2: number | Vector3): Vector3 {
+    public div(v1: Vector3, v2: number | Vector3): Vector3 {
         return typeof v2 === 'number'
             ? new Vector3(v1.x / v2, v1.y / v2, v1.z / v2)
             : new Vector3(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z);
     }
 
     public divide(v: number | Vector3): Vector3 {
-        return Vector3.div(this, v);
+        return this.div(this, v);
     }
 
-    public static productDot(v1: Vector3, v2: Vector3): number {
+    public productDot(v1: Vector3, v2: Vector3): number {
         return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
     }
 
     public dot(v: Vector3): number {
-        return Vector3.productDot(this, v);
+        return this.productDot(this, v);
     }
 
-    public static productCross(v1: Vector3, v2: Vector3): Vector3 {
+    public productCross(v1: Vector3, v2: Vector3): Vector3 {
         return new Vector3(
             v1.y * v2.z - v1.z * v2.y,
             v1.z * v2.x - v1.x * v2.z,
@@ -64,7 +64,7 @@ export class Vector3 {
     }
 
     public cross(v: Vector3): Vector3 {
-        return Vector3.productCross(this, v);
+        return this.productCross(this, v);
     }
 
     public normalizeVector(): Vector3 {
