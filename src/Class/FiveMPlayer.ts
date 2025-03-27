@@ -312,6 +312,20 @@ export class FiveMPlayer {
     }
 
     /**
+     * Disabled das Abfeuern oder Schlagen für einen Frame
+     */
+    public static disableFiring() {
+        DisablePlayerFiring(PlayerPedId(), true);
+    }
+
+    /**
+     * Enabled das Abfeuern oder Schlagen für einen Frame
+     */
+    public static enableFiring() {
+        DisablePlayerFiring(PlayerPedId(), false);
+    }
+
+    /**
      * Hided HUDs for den Frame
      * @param hub als number/{@link HUDCOMPONENT} oder als numberArray/{@link HUDCOMPONENT}Array
      */
@@ -371,5 +385,13 @@ export class FiveMPlayer {
      */
     static get isInVehicle() : boolean {
         return IsPedInAnyVehicle(PlayerPedId(), true);
+    }
+
+    /**
+     * Prüft ob der Spieler im Armed ist (Melee und Fists ausgenommen)
+     * @returns true - der Spieler hat keine Waffe, false - der Spieler hat keine Waffe
+     */
+    static get isArmed() : boolean {
+        return IsPedArmed(PlayerPedId(), 4 | 2);
     }
 }
