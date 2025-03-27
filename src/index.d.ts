@@ -4,11 +4,12 @@ import {Vector3} from "./utils/Vector3";
 import {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION} from "./@types/player";
 import {VEHICLELOCKSTATE} from "./@types/vehicle";
 import { WEAPONTYPE } from "./@types/weapon";
+import { Utils } from "utils/network"
 
 
 export { HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION, VEHICLELOCKSTATE, WEAPONTYPE };
 
-export class FiveMPlayer {
+export declare class FiveMPlayer {
     static get position(): Vector3;
     static set position(newPosition: Vector3 | [x: number, y: number, z: number]): void;
     static get rotation(): Vector3;
@@ -47,7 +48,7 @@ export class FiveMPlayer {
     static get isUnderWater(): boolean;
     static get isInVehicle(): boolean;
 }
-export class FiveMVehicle {
+export declare class FiveMVehicle {
     private vehicle: fiveMVehicle;
     constructor(vehicle: fiveMVehicle);
     get rpm(): number;
@@ -58,7 +59,7 @@ export class FiveMVehicle {
     get lockstate(): number;
     set lockstate(state: number | VEHICLELOCKSTATE): void;
 }
-export class Vector3 {
+export declare class Vector3 {
     public x: number;
     public y: number;
     public z: number;
@@ -83,4 +84,15 @@ export class Vector3 {
     public get Length(): number;
     public toRadians(): Vector3;
     public replace(v: Vector3): void;
+}
+export declare class Utils {
+    public static GetNetIdFromBagName(bagName: string): number;
+    public static GetVehFromBagName(bagName: string): number;
+    public static GetVehFromNetworkId(netId: number): number;
+    public static GetPedFromBagName(bagName: string): number;
+    public static GetPedFromNetworkId(netId: number): number;
+    public static GetObjectFromBagName(bagName: string): number;
+    public static GetObjectFromNetworkid(netId: number): number;
+    public static GetEntityFromBagName(bagName: string): number;
+    public static GetEntityFromNetworkid(netId: number): number;
 }
