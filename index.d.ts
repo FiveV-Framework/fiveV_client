@@ -51,28 +51,28 @@ export class FiveMVehicle {
     private vehicle: FiveMVehicle;
     constructor(vehicle: FiveMVehicle);
     get rpm(): number;
-    set rpm(rpm: number): void;
+    set rpm(rpm: number);
     get speed(): number;
-    set engineOn(state: boolean): void;
+    set engineOn(state: boolean);
 
     get lockstate(): number;
-    set lockstate(state: number | VEHICLELOCKSTATE): void;
+    set lockstate(state: number | VEHICLELOCKSTATE);
 }
 export class Vector3 {
     public x: number;
     public y: number;
     public z: number;
     constructor(x: number, y: number, z: number);
-    public add(v1: Vector3, v2: number | Vector3): Vector3;
+    public add(v2: number | Vector3): Vector3;
     public addition(v: number | Vector3): Vector3;
-    public sub(v1: Vector3, v2: Vector3): Vector3;
+    public sub(v2: Vector3): Vector3;
     public subtract(v: Vector3): Vector3;
-    public mul(v1: Vector3, v2: number | Vector3): Vector3;
+    public mul(v2: number | Vector3): Vector3;
     public multiply(v: number | Vector3): Vector3;
-    public div(v1: Vector3, v2: number | Vector3): Vector3;
-    public productDot(v1: Vector3, v2: Vector3): number;
+    public div(v2: number | Vector3): Vector3;
+    public productDot(v2: Vector3): number;
     public dot(v: Vector3): number;
-    public productCross(v1: Vector3, v2: Vector3): Vector3;
+    public productCross(v2: Vector3): Vector3;
     public cross(v: Vector3): Vector3;
     public normalizeVector(): Vector3;
     public get normalize(): Vector3;
