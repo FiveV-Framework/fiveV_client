@@ -5,22 +5,22 @@ import { WEAPONTYPE } from "./src/@types/weapon";
 
 export { HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION, VEHICLELOCKSTATE, WEAPONTYPE };
 
-export declare class FiveMPlayer {
+export class FiveMPlayer {
     static get position(): Vector3;
-    static set position(newPosition: Vector3 | [x: number, y: number, z: number]): void;
+    static set position(newPosition: Vector3 | [x: number, y: number, z: number]);
     static get rotation(): Vector3;
-    static set rotation(newRotation: Vector3 | [x: number, y: number, z: number]): void;
+    static set rotation(newRotation: Vector3 | [x: number, y: number, z: number]);
     static get heading(): number;
-    static set heading(newheading: number): void;
+    static set heading(newheading: number);
     static get camHeading(): number;
     static get collision(): boolean;
-    static set collision(enable: boolean): void;
+    static set collision(enable: boolean);
     static get frozen(): boolean;
-    static set frozen(enable: boolean): void;
+    static set frozen(enable: boolean);
     static get invincible(): boolean;
-    static set invincible(enable: boolean): void;
+    static set invincible(enable: boolean);
     static get invisible(): boolean;
-    static set invisible(enable: boolean): void;
+    static set invisible(enable: boolean);
     public static disableKey(padIndex?: number, key?: number | CONTROL_INPUTS_ACTION): void;
     public static enableKey(padIndex?: number, key?: number | CONTROL_INPUTS_ACTION): void;
     public static disableKeys(padIndex?: number, keys?: number[] | CONTROL_INPUTS_ACTION[]): void;
@@ -47,9 +47,9 @@ export declare class FiveMPlayer {
     static get isInVehicle(): boolean;
     static get isArmed(): boolean;
 }
-export declare class FiveMVehicle {
-    private vehicle: fiveMVehicle;
-    constructor(vehicle: fiveMVehicle);
+export class FiveMVehicle {
+    private vehicle: FiveMVehicle;
+    constructor(vehicle: FiveMVehicle);
     get rpm(): number;
     set rpm(rpm: number): void;
     get speed(): number;
@@ -58,7 +58,7 @@ export declare class FiveMVehicle {
     get lockstate(): number;
     set lockstate(state: number | VEHICLELOCKSTATE): void;
 }
-export declare class Vector3 {
+export class Vector3 {
     public x: number;
     public y: number;
     public z: number;
@@ -84,7 +84,7 @@ export declare class Vector3 {
     public toRadians(): Vector3;
     public replace(v: Vector3): void;
 }
-export declare class Utils {
+export class Utils {
     public static GetNetIdFromBagName(bagName: string): number;
     public static GetVehFromBagName(bagName: string): number;
     public static GetVehFromNetworkId(netId: number): number;
