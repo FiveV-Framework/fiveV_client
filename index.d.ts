@@ -1,9 +1,3 @@
-import {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION} from "./src/@types/player";
-import {VEHICLELOCKSTATE, VEHINDICATORLIGHTS} from "./src/@types/vehicle";
-import { WEAPONTYPE } from "./src/@types/weapon";
-import {FiveMVehicle} from "./src/Class/FiveMVehicle";
-import {LOCALE} from "./src/utils/ungrouped";
-
 declare module "five-client" {
 
     export {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION, VEHICLELOCKSTATE, WEAPONTYPE, LOCALE, VEHINDICATORLIGHTS};
