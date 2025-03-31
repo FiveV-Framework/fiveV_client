@@ -251,7 +251,7 @@ declare module "five-client" {
         static get isArmed(): boolean;
     }
 
-    export declare class Vector3 {
+    export class Vector3 {
         public x: number;
         public y: number;
         public z: number;
