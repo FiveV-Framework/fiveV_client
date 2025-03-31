@@ -1,6 +1,10 @@
+import { CONTROL_INPUTS_ACTION, PEDCONFIGFLAGS, HUDCOMPONENT} from "./src/@types/player";
+import { VEHICLELOCKSTATE, VEHINDICATORLIGHTS } from "./src/@types/vehicle";
+import { LOCALE } from "./src/utils/ungrouped";
+
 declare module "five-client" {
 
-    export {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION, VEHICLELOCKSTATE, WEAPONTYPE, LOCALE, VEHINDICATORLIGHTS};
+    export {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION, VEHICLELOCKSTATE, LOCALE, VEHINDICATORLIGHTS};
 
     export interface FiveMPlayer {
         /**
