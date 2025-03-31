@@ -1,8 +1,8 @@
-import { CONTROL_INPUTS_ACTION, PEDCONFIGFLAGS, HUDCOMPONENT} from "./src/@types/player";
-import { VEHICLELOCKSTATE, VEHINDICATORLIGHTS } from "./src/@types/vehicle";
-import { LOCALE } from "./src/utils/ungrouped";
+import { CONTROL_INPUTS_ACTION, PEDCONFIGFLAGS, HUDCOMPONENT} from "./@types/player";
+import { VEHICLELOCKSTATE, VEHINDICATORLIGHTS } from "./@types/vehicle";
+import { LOCALE } from "./utils/ungrouped";
 
-declare module "five-client" {
+declare module "client" {
 
     export {HUDCOMPONENT, PEDCONFIGFLAGS, CONTROL_INPUTS_ACTION, VEHICLELOCKSTATE, LOCALE, VEHINDICATORLIGHTS};
 
