@@ -83,3 +83,39 @@ export enum GTADLC {
     PATCH2023_01 = "patch2023_01",
     PATCH2023_01_G9EC = "patch2023_01_g9ec",
 }
+
+export enum LOCALE {
+    Arabic = "ar",
+    Belarusian = "by",
+    Czech = "cz",
+    German = "de",
+    English = "en",
+    Spanish = "es",
+    Farsi = "fa",
+    French = "fr",
+    Hebrew = "he",
+    Hungarian = "hu",
+    Indonesian = "id",
+    Hindi = "in_hd",
+    Malayalam = "in_ml",
+    Telugu = "in_tl",
+    Tamil = "in_tm",
+    Italian = "it",
+    Lithuanian = "lt",
+    Latvian = "lv",
+    NorwegianBokmal = "nb_no",
+    NorwegianNynorsk = "nn_no",
+    Polish = "pl",
+    Portugese = "pt",
+    BrazilianPortuguese = "pt_br",
+    Romanian = "ro",
+
+    Serbian = "rs", // Wrong tag (sr)
+    Russian = "ru",
+    Slovak = "sk",
+    Thai = "th",
+    Turkish = "tr",
+    Ukrainian = "ua", // Wrong tag (uk)
+    ChineseSimplified = "zh_cn",
+    ChineseTraditional = "zh_tw",
+}
