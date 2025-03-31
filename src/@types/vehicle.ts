@@ -27,3 +27,12 @@ export enum VEHICLELOCKSTATE {
     // Vehicle is completely locked, preventing entry entirely, even if previously inside.
     VEHICLELOCK_CANNOT_ENTER = 10
 }
+
+export enum VEHINDICATORLIGHTS {
+    None = 0,
+    BlinkLeft = 1,
+    BlinkRight = 2,
+    BlinkPermBoth = 4,
+    StaticBoth = 8,
+    Interior = 64,
+}
