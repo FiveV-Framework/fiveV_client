@@ -1,5 +1,5 @@
 import { CONTROL_INPUTS_ACTION, PEDCONFIGFLAGS, HUDCOMPONENT} from "./@types/player";
-import {fiveMVehicle, VEHICLELOCKSTATE, VEHINDICATORLIGHTS} from "./@types/vehicle";
+import {fiveMVehicle, NEONINDEX, VEHICLELOCKSTATE, VEHINDICATORLIGHTS} from "./@types/vehicle";
 import { LOCALE } from "./utils/ungrouped";
 
 declare module "client" {
@@ -310,6 +310,31 @@ declare module "client" {
          * @see [SetVehicleDoorsLocked](https://docs.fivem.net/natives/?_0xB664292EAECF7FA6) für weitere Informationen.
          */
         set lockstate(state: number);
+        /**
+         * Gibt zurück, ob die Neons des Fahrzeugs aktiv sind
+         * @returns true - alle Neons aktiviert // false - nicht alle Neons aktiviert
+         * @see [IsVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x8C4B92553E4766A5) für weitere Informationen.
+         */
+        get neons():boolean;
+        /**
+         * Setzt den NeonActive Status des Fahrzeugs.
+         * @param state Ob alle Neons aktiviert werden sollen
+         * @see [SetVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x2AA720E4287BF269) für weitere Informationen.
+         */
+        set neons(state: boolean);
+        /**
+         * Gibt alle am Fahrzeug befindlichen Neons zurück, die aktiv sind
+         * @returns Number-Array oder {@link NEONINDEX}-Array welcher alle aktiven Neons beinhaltet
+         * @see [IsVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x8C4B92553E4766A5) für weitere Informationen.
+         */
+        getAllActiveNeons():number[] | NEONINDEX[];
+        /**
+         * Aktiviert alle spezifizierten Neons
+         * @param state Ob alle Neons aktiviert werden sollen
+         * @param neonsToActivate Number-Array oder {@link NEONINDEX}-Array welcher alle Neons beinhaltet, die aktiviert werden sollen
+         * @see [SetVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x2AA720E4287BF269) für weitere Informationen.
+         */
+        activateSpecificNeons(state: boolean, neonsToActivate: number[] | NEONINDEX[]);
     }
 
     export class Vector3 {
