@@ -36,6 +36,15 @@ export class FiveMVehicle {
     }
 
     /**
+     * Gibt den Motorstatus des Fahrzeugs zurück
+     * @returns state Ein Boolean-Wert, der angibt, ob der Motor ein- (true) oder ausgeschaltet (false) ist.
+     * @see [GetIsVehicleEngineRunning](https://docs.fivem.net/natives/?_0x7DC6D022) für weitere Informationen.
+     */
+    get engineOn(): boolean {
+        return GetIsVehicleEngineRunning(this.vehicle);
+    }
+
+    /**
      * Setzt den Motorstatus des Fahrzeugs.
      * @param state Ein Boolean-Wert, der angibt, ob der Motor ein- (true) oder ausgeschaltet (false) werden soll.
      * @see [SetVehicleEngineOn](https://docs.fivem.net/natives/?_0x2497C4717C8B881E) für weitere Informationen.
