@@ -31,8 +31,17 @@ export class FiveMVehicle {
      * @returns Die aktuelle Geschwindigkeit des Fahrzeugs in km/h.
      * @see [GetEntitySpeed](https://docs.fivem.net/natives/?_0xD5037BA82E12416F) für weitere Informationen.
      */
-    get speed() {
+    get speedkmh() {
         return GetEntitySpeed(this.vehicle) * 3.6;
+    }
+
+    /**
+     * Gibt die aktuelle Geschwindigkeit des Fahrzeugs in km/h zurück.
+     * @returns Die aktuelle Geschwindigkeit des Fahrzeugs in mph.
+     * @see [GetEntitySpeed](https://docs.fivem.net/natives/?_0xD5037BA82E12416F) für weitere Informationen.
+     */
+    get speedmph() {
+        return GetEntitySpeed(this.vehicle) * 2.236936;
     }
 
     /**

@@ -268,7 +268,13 @@ declare module "client" {
          * @returns Die aktuelle Geschwindigkeit des Fahrzeugs in km/h.
          * @see [GetEntitySpeed](https://docs.fivem.net/natives/?_0xD5037BA82E12416F) für weitere Informationen.
          */
-        get speed(): number;
+        get speedkmh(): number;
+        /**
+         * Gibt die aktuelle Geschwindigkeit des Fahrzeugs in km/h zurück.
+         * @returns Die aktuelle Geschwindigkeit des Fahrzeugs in mph.
+         * @see [GetEntitySpeed](https://docs.fivem.net/natives/?_0xD5037BA82E12416F) für weitere Informationen.
+         */
+        get speedmph(): number;
         /**
          * Gibt den Motorstatus des Fahrzeugs zurück
          * @returns state Ein Boolean-Wert, der angibt, ob der Motor ein- (true) oder ausgeschaltet (false) ist.
