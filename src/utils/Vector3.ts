@@ -106,4 +106,32 @@ export class Vector3 {
             (this.z * Math.PI) / 180
         );
     }
+
+    public static ClampVectorAlongAxis(v: Vector3, axis: Vector3): Vector3 {
+        const axisNorm = axis.normalizeVector()
+        const projectionScalar = v.dot(axisNorm);
+        return axisNorm.multiply(projectionScalar);
+    }
+
+    public static GetVectorLength(pos: Vector3): number {
+        return Math.sqrt(pos.x * pos.x + pos.y * pos.y + pos.z * pos.z);
+    }
+
+    public negate(): Vector3 {
+        return new Vector3(-this.x, -this.y, -this.z);
+    }
+        public neg(): Vector3 {
+            return this.negate();
+        }
+
+    public length(): number {
+        return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    }
+
+    public clamp(other: Vector3): Vector3 {
+        const axisNorm = other.normalizeVector()
+        const projectionScalar = this.dot(axisNorm);
+        return axisNorm.multiply(projectionScalar);
+    }
+
 }
