@@ -1,5 +1,7 @@
 //@Types
 export * from "./@types/vehicle";
+export * from "./@types/player";
+export * from "./@types/weapon";
 
 //Class
 export * from "./Class/FiveVPlayer";
