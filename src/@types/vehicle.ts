@@ -36,3 +36,10 @@ export enum VEHINDICATORLIGHTS {
     StaticBoth = 8,
     Interior = 64,
 }
+
+export enum NEONINDEX {
+    NEON_BACK = 0,
+    NEON_RIGHT = 1,
+    NEON_LEFT = 2,
+    NEON_FRONT = 3
+}

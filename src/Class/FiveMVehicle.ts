@@ -1,4 +1,4 @@
-import {fiveMVehicle, VEHICLELOCKSTATE} from "../@types/vehicle";
+import {fiveMVehicle, NEONINDEX, VEHICLELOCKSTATE} from "../@types/vehicle";
 
 export class FiveMVehicle {
     private vehicle: fiveMVehicle;
@@ -89,5 +89,56 @@ export class FiveMVehicle {
      */
     set lockstate(state: number) {
         SetVehicleDoorsLocked(this.vehicle, state);
+    }
+
+    /**
+     * Gibt zurück, ob die Neons des Fahrzeugs aktiv sind
+     * @returns true - alle Neons aktiviert // false - nicht alle Neons aktiviert
+     * @see [IsVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x8C4B92553E4766A5) für weitere Informationen.
+     */
+    get neons():boolean {
+        return IsVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_BACK) &&
+            IsVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_FRONT) &&
+            IsVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_LEFT) &&
+            IsVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_RIGHT);
+    }
+
+    /**
+     * Setzt den NeonActive Status des Fahrzeugs.
+     * @param state Ob alle Neons aktiviert werden sollen
+     * @see [SetVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x2AA720E4287BF269) für weitere Informationen.
+     */
+    set neons(state: boolean) {
+        SetVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_BACK, state);
+        SetVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_FRONT, state);
+        SetVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_LEFT, state);
+        SetVehicleNeonLightEnabled(this.vehicle, NEONINDEX.NEON_RIGHT, state);
+    }
+
+    /**
+     * Gibt alle am Fahrzeug befindlichen Neons zurück, die aktiv sind
+     * @returns Number-Array oder {@link NEONINDEX}-Array welcher alle aktiven Neons beinhaltet
+     * @see [IsVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x8C4B92553E4766A5) für weitere Informationen.
+     */
+    public getAllActiveNeons() : number[] | NEONINDEX[]{
+        let activeNeonList : NEONINDEX[] = [];
+        for (let i= 0; i < Object.keys(NEONINDEX).filter(key => isNaN(Number(key))).length; i++) {
+            if (IsVehicleNeonLightEnabled(this.vehicle, i)) {
+                activeNeonList.push(i);
+            }
+        }
+        return activeNeonList;
+    }
+
+    /**
+     * Aktiviert alle spezifizierten Neons
+     * @param state Ob alle Neons aktiviert werden sollen
+     * @param neonsToActivate Number-Array oder {@link NEONINDEX}-Array welcher alle Neons beinhaltet, die aktiviert werden sollen
+     * @see [SetVehicleNeonLightEnabled](https://docs.fivem.net/natives/?_0x2AA720E4287BF269) für weitere Informationen.
+     */
+    public activateSpecificNeons(state: boolean, neonsToActivate: number[] | NEONINDEX[]) {
+        for (let i= 0; i < neonsToActivate.length -1; i++) {
+            SetVehicleNeonLightEnabled(this.vehicle, i, true);
+        }
     }
 }
