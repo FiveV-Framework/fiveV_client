@@ -1,11 +1,18 @@
-import {CONTROL_INPUTS_ACTION, fiveMPlayer, HUDCOMPONENT, PEDCONFIGFLAGS} from "../@types/player";
+import {CONTROL_INPUTS_ACTION, HUDCOMPONENT, PEDCONFIGFLAGS} from "../@types/player";
 import {Vector3} from "../utils/Vector3";
 import {TransformNumberArrayInVector3} from "../utils/Transformer";
 import {FiveVWeapon} from "../@types/weapon";
-import {FiveMVehicle} from "./FiveMVehicle";
+import {FiveVVehicle} from "./FiveVVehicle";
 
-export class FiveMPlayer {
+export class FiveVPlayer {
 
+    /**
+     * Gibt den Player zurück
+     * @returns Den Player als number
+     */
+    static get player(): number {
+        return PlayerPedId();
+    }
     /**
      * Gibt die Position des Players zurück
      * @returns Die Position in einem {@link Vector3}.
@@ -219,8 +226,8 @@ export class FiveMPlayer {
      * Gibt das Fahrzeug, in welchem ein Spieler sich gerade befindet, zurück
      * @returns {@link FiveMVehicle}
      */
-    static get vehicle() : FiveMVehicle {
-        return new FiveMVehicle(GetVehiclePedIsIn(PlayerPedId(), false));
+    static get vehicle() : FiveVVehicle {
+        return new FiveVVehicle(GetVehiclePedIsIn(PlayerPedId(), false));
     }
 
     /**

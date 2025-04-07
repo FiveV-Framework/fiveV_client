@@ -2,8 +2,8 @@
 export * from "./@types/vehicle";
 
 //Class
-export * from "./Class/FiveMPlayer";
-export * from "./Class/FiveMVehicle";
+export * from "./Class/FiveVPlayer";
+export * from "./Class/FiveVVehicle";
 
 //Utils
 export * from "./utils/Vector3";

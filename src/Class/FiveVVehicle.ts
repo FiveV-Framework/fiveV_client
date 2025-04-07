@@ -1,5 +1,5 @@
 import {
-    fiveMVehicle,
+    fiveVVehicle,
     NEONINDEX,
     SEATPOSITION,
     VEHICLECLASS,
@@ -7,10 +7,10 @@ import {
     VEHICLEPLATETYPE
 } from "../@types/vehicle";
 
-export class FiveMVehicle {
-    private vehicle: fiveMVehicle;
+export class FiveVVehicle {
+    private vehicle: fiveVVehicle;
 
-    constructor(vehicle: fiveMVehicle) {
+    constructor(vehicle: fiveVVehicle) {
         this.vehicle = vehicle;
     }
 
