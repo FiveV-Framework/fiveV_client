@@ -1,7 +1,7 @@
 /**
  * Das FiveM Vehicle (in einer Number)
  */
-export type fiveMVehicle = number;
+export type fiveVVehicle = number;
 
 export enum VEHICLELOCKSTATE {
     // No specific lock state, vehicle behaves according to the game's default settings.
@@ -42,4 +42,50 @@ export enum NEONINDEX {
     NEON_RIGHT = 1,
     NEON_LEFT = 2,
     NEON_FRONT = 3
+}
+
+export enum SEATPOSITION
+{
+    SF_FrontDriverSide = -1,
+    SF_FrontPassengerSide = 0,
+    SF_BackDriverSide = 1,
+    SF_BackPassengerSide = 2,
+    SF_AltFrontDriverSide = 3,
+    SF_AltFrontPassengerSide = 4,
+    SF_AltBackDriverSide = 5,
+    SF_AltBackPassengerSide = 6,
+}
+
+export enum VEHICLECLASS {
+    Compacts,
+    Sedans,
+    SUVs,
+    Coupes,
+    Muscle,
+    Sports_Classics,
+    Sports,
+    Super,
+    Motorcycles,
+    Off_road,
+    Industrial,
+    Utility,
+    Vans,
+    Cycles,
+    Boats,
+    Helicopters,
+    Planes,
+    Service,
+    Emergency,
+    Military,
+    Commercial,
+    Trains,
+    Open_Wheel,
+}
+
+export enum VEHICLEPLATETYPE
+{
+    VPT_FRONT_AND_BACK_PLATES = 0,
+    VPT_FRONT_PLATES = 1,
+    VPT_BACK_PLATES = 2,
+    VPT_NONE = 3,
 }
