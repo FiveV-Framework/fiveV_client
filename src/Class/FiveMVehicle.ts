@@ -1,4 +1,11 @@
-import {fiveMVehicle, NEONINDEX, VEHICLELOCKSTATE} from "../@types/vehicle";
+import {
+    fiveMVehicle,
+    NEONINDEX,
+    SEATPOSITION,
+    VEHICLECLASS,
+    VEHICLELOCKSTATE,
+    VEHICLEPLATETYPE
+} from "../@types/vehicle";
 
 export class FiveMVehicle {
     private vehicle: fiveMVehicle;
@@ -140,5 +147,161 @@ export class FiveMVehicle {
         for (let i= 0; i < neonsToActivate.length -1; i++) {
             SetVehicleNeonLightEnabled(this.vehicle, i, true);
         }
+    }
+
+    /**
+     * Gibt die Maximalgeschwindigkeit des Fahrzeugs zurück
+     * @returns die Maximalgeschwindigkeit als float
+     * @see [GetVehicleMaxSpeed](https://docs.fivem.net/natives/?_0x53AF99BAA671CA47) für weitere Informationen.
+     */
+    get maxSpeed(): number {
+        return GetVehicleEstimatedMaxSpeed(this.vehicle);
+    }
+
+    /**
+     * Setzt die Maximalgeschwindigkeit des Fahrzeugs.
+     * @param newMaxSpeed Maximalgeschwindigkeit als float
+     * @see [SetVehicleMaxSpeed](https://docs.fivem.net/natives/?_0xBAA045B4E42F3C06) für weitere Informationen.
+     */
+    set maxSpeed(newMaxSpeed: number) {
+        SetVehicleMaxSpeed(this.vehicle, newMaxSpeed);
+    }
+
+    /**
+     * Gibt die Lightsmodifier zurück
+     * @returns die Lightsmodifier
+     * @see [GetVehicleLightMultiplier](https://docs.fivem.net/natives/?_0x7E6E219C) für weitere Informationen.
+     */
+    get lightsModifier(): number {
+        return GetVehicleLightMultiplier(this.vehicle);
+    }
+
+    /**
+     * Gibt das Plate zurück
+     * @returns das Plate
+     * @see [GetVehicleNumberPlateText](https://docs.fivem.net/natives/?_0xE8522D58) für weitere Informationen.
+     */
+    get numberPlateText(): string {
+        return GetVehicleNumberPlateText(this.vehicle);
+    }
+
+    /**
+     * Gibt zurück ob das Fahrzeug ein Elektrofahrzeug ist
+     * @returns true, wenn Fahrzeug ein Elektrofahrzeug ist - false, wenn nicht
+     * @see [GetIsVehicleElectric](https://docs.fivem.net/natives/?_0x1FCB07FE230B6639) für weitere Informationen.
+     */
+    get electric():boolean {
+        return GetIsVehicleElectric(this.vehicle);
+    }
+
+    /**
+     * Gibt den Ped im DriverSeat zurück
+     * @returns Ped im DriverSeat - 0 wenn keiner drinne sitzt
+     * @see [GetPedInVehicleSeat](https://docs.fivem.net/natives/?_0xBB40DD2270B65366) für weitere Informationen.
+     */
+    get playerInDriverSeat(): number {
+        return GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_FrontDriverSide);
+    }
+
+    /**
+     * Alle im Fahrzeug sitzenden Personen zurück
+     * @returns numberArray[], sortiert nach {@link SEATPOSITION}
+     * @see [GetPedInVehicleSeat](https://docs.fivem.net/natives/?_0xBB40DD2270B65366) für weitere Informationen.
+     */
+    get allPlayersSortedBySeatInVehicle(): number[] {
+        let playersInVehicle : number[] = [];
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_FrontDriverSide));
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_FrontPassengerSide));
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_BackDriverSide));
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_BackPassengerSide));
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_AltFrontDriverSide));
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_AltFrontPassengerSide));
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_AltBackDriverSide));
+        playersInVehicle.push(GetPedInVehicleSeat(this.vehicle, SEATPOSITION.SF_AltBackPassengerSide));
+        return playersInVehicle;
+    }
+
+    /**
+     * Gibt die Beschleunigung eines Fahrzeugs zurück
+     * @returns number als Beschleunigung
+     * @see [GetVehicleAcceleration](https://docs.fivem.net/natives/?_0x5DD35C8D074E57AE) für weitere Informationen.
+     */
+    get acceleration(): number {
+        return GetVehicleAcceleration(this.vehicle);
+    }
+
+    /**
+     * Gibt die Klasse des Fahrzeugs zurück
+     * @returns {@link VEHICLECLASS}
+     * @see [GetVehicleClass](https://docs.fivem.net/natives/?_0x29439776AAA00A62) für weitere Informationen.
+     */
+    get class(): VEHICLECLASS {
+        return GetVehicleClass(this.vehicle) as VEHICLECLASS;
+    }
+
+    /**
+     * Gibt den Dirtlevel des Fahrzeugs zurück
+     * @returns Dirtlevel als Zahl
+     * @see [GetVehicleDirtLevel](https://docs.fivem.net/natives/?_0x8F17BC8BA08DA62B) für weitere Informationen.
+     */
+    get dirtLevel(): number {
+        return GetVehicleDirtLevel(this.vehicle);
+    }
+
+    /**
+     * Setzt den Dirtlevel des Fahrzeugs
+     * @param dirtLevel als Zahl
+     * @see [SetVehicleDirtLevel](https://docs.fivem.net/natives/?_0x79D3B596FE44EE8B) für weitere Informationen.
+     */
+    set dirtLevel(dirtLevel: number) {
+        SetVehicleDirtLevel(this.vehicle, dirtLevel);
+    }
+
+    /**
+     * Gibt den Zustand des Fahrzeugs zurück
+     * @returns 1000 wenn er das Fahrzeug nicht bekommt oder das Leben nicht abfragen kann -
+     * Minimum -4000 : Motor kaputt || < 0 : Motor fängt Feuer und bekommt schnell Schaden ||
+     * < 300 : Motor ist am Rauchen und verliert Funktionalität || ca. 650 : Verliert Gas || < Maximum 1000 : Normalzustand
+     * @see [GetVehicleEngineHealth](https://docs.fivem.net/natives/?_0xC45D23BAF168AAB8) für weitere Informationen.
+     */
+    get engineHealth(): number {
+        return GetVehicleEngineHealth(this.vehicle);
+    }
+
+    /**
+     * Gibt den Zustand des Fahrzeugs zurück
+     * @param engineHealth Minimum -4000 : Motor kaputt || < 0 : Motor fängt Feuer und bekommt schnell Schaden ||
+     * < 300 : Motor ist am Rauchen und verliert Funktionalität || ca. 650 : Verliert Gas || < Maximum 1000 : Normalzustand
+     * @see [SetVehicleEngineHealth](https://docs.fivem.net/natives/?_0x45F6D8EEF34ABEF1) für weitere Informationen.
+     */
+    set engineHealth(engineHealth: number) {
+        SetVehicleEngineHealth(this.vehicle, engineHealth);
+    }
+
+    /**
+     * Gibt die maximale Bremsung des Fahrzeugs zurück
+     * @returns die maximale Bremsung als Number
+     * @see [GetVehicleMaxBraking](https://docs.fivem.net/natives/?_0xAD7E85FC227197C4) für weitere Informationen.
+     */
+    get maxBrake(): number {
+        return GetVehicleMaxBraking(this.vehicle);
+    }
+
+    /**
+     * Gibt die maximale Anzahl an Passengers zurück
+     * @returns die maximale Anzahl an Passengers
+     * @see [GetVehicleMaxNumberOfPassengers](https://docs.fivem.net/natives/?_0xA7C4F2C6E744A550) für weitere Informationen.
+     */
+    get maxPassengers(): number {
+        return GetVehicleMaxNumberOfPassengers(this.vehicle);
+    }
+
+    /**
+     * Gibt den PlateType zurück
+     * @returns das Fahrzeug Plate Typ als {@link VEHICLEPLATETYPE}
+     * @see [GetVehiclePlateType](https://docs.fivem.net/natives/?_0x9CCC9525BF2408E0) für weitere Informationen.
+     */
+    get plateTyp(): VEHICLEPLATETYPE {
+        return GetVehiclePlateType(this.vehicle) as VEHICLEPLATETYPE;
     }
 }
