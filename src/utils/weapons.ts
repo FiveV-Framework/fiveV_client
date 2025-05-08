@@ -1,5 +1,4 @@
 import {fiveVWeapon, fiveVWeaponComponent, WEAPONTYPE} from "../@types/weapon";
-import {GTADLC} from "./ungrouped";
 
 /*async function fetchWeapons(): Promise<FiveVWeapon[]> {
     const res:string = await fetch('https://docs.fivem.net/_next/data/IvuYNvthisdS29Cwtxg0B/docs/game-references/weapon-models.json');
@@ -235,15 +234,82 @@ export const FiveVWeaponList : fiveVWeapon[] = [
             { name: "Grip", Hash_Key: "COMPONENT_AT_AR_AFGRIP", Hash: "0xC164F53" },
             { name: "Yusuf Amir Luxury Finish", Hash_Key: "COMPONENT_ASSAULTRIFLE_VARMOD_LUXE", Hash: "0x4EAD7533" },
         ]},
-    //{name: "Special Carbine", type: WEAPONTYPE.RIFLE, Hash: "WEAPON_SPECIALCARBINE", Model_Hash_Key: "w_ar_specialcarbine"}
+    {name: "Special Carbine", type: WEAPONTYPE.RIFLE, Hash: "WEAPON_SPECIALCARBINE", Model_Hash_Key: "w_ar_specialcarbine", Description: "Combining accuracy, maneuverability and low recoil, this is an extremely versatile assault rifle for any combat situation. Part of The Business Update.",
+        Components: [
+            { name: "Default Clip", Hash_Key: "COMPONENT_SPECIALCARBINE_CLIP_01", Hash: "0xC6C7E581" },
+            { name: "Extended Clip", Hash_Key: "COMPONENT_SPECIALCARBINE_CLIP_02", Hash: "0x7C8BD10E" },
+            { name: "Drum Magazine", Hash_Key: "COMPONENT_SPECIALCARBINE_CLIP_03", Hash: "0x6B59AEAA" },
+            { name: "Flashlight", Hash_Key: "COMPONENT_AT_AR_FLSH", Hash: "0x7BC4CDDC" },
+            { name: "Scope", Hash_Key: "COMPONENT_AT_SCOPE_MEDIUM", Hash: "0xA0D89C42" },
+            { name: "Suppressor", Hash_Key: "COMPONENT_AT_AR_SUPP_02", Hash: "0xA73D4664" },
+            { name: "Grip", Hash_Key: "COMPONENT_AT_AR_AFGRIP", Hash: "0xC164F53" },
+            { name: "Etched Gun Metal Finish", Hash_Key: "COMPONENT_SPECIALCARBINE_VARMOD_LOWRIDER", Hash: "0x730154F2" },
+        ]},
+    {name: "Heavy Rifle", type: WEAPONTYPE.RIFLE, Hash: "WEAPON_HEAVYRIFLE", Model_Hash_Key: "w_ar_heavyrifleh", Description: "The no-holds-barred 30-round answer to that eternal question, how do I get this guy off my back?",
+    Components: [
+    ]},
+    {name: "Service Carbine", type: WEAPONTYPE.RIFLE, Hash: "WEAPON_TACTICALRIFLE", Model_Hash_Key: "W_AR_CARBINERIFLE_REH", Description: "This season's must-have hardware for law enforcement, military personnel and anyone locked in a fight to the death with either law enforcement or military personnel.",
+    Components: [
+    ]},
+    {name: "Carbine Rifle Mk II", type: WEAPONTYPE.RIFLE, Hash: "WEAPON_CARBINERIFLE_MK2", Model_Hash_Key: "w_ar_carbineriflemk2", Description: "This is bespoke, artisan firepower: you couldn't deliver a hail of bullets with more love and care if you inserted them by hand.",
+    Components: [// Carbine Rifle Mk II
+        { name: "Default Clip", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_01", Hash: "0x4C7A391E" },
+        { name: "Extended Clip", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_02", Hash: "0x5DD5DBD5" },
+        { name: "Tracer Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_TRACER", Hash: "0x1757F566" },
+        { name: "Incendiary Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_INCENDIARY", Hash: "0x3D25C2A7" },
+        { name: "Armor Piercing Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_ARMORPIERCING", Hash: "0x255D5D57" },
+        { name: "Full Metal Jacket Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_FMJ", Hash: "0x44032F11" },
+        { name: "Grip", Hash_Key: "COMPONENT_AT_AR_AFGRIP_02", Hash: "0x9D65907A" },
+        { name: "Flashlight", Hash_Key: "COMPONENT_AT_AR_FLSH", Hash: "0x7BC4CDDC" },
+        { name: "Holographic Sight", Hash_Key: "COMPONENT_AT_SIGHTS", Hash: "0x420FD713" },
+        { name: "Small Scope", Hash_Key: "COMPONENT_AT_SCOPE_MACRO_MK2", Hash: "0x49B2945" },
+        { name: "Medium Scope", Hash_Key: "COMPONENT_AT_SCOPE_MEDIUM_MK2", Hash: "0xC66B6542" },
+        { name: "Suppressor", Hash_Key: "COMPONENT_AT_AR_SUPP", Hash: "0x837445AA" },
+        { name: "Flat Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_01", Hash: "0xB99402D4" },
+        { name: "Tactical Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_02", Hash: "0xC867A07B" },
+        { name: "Fat-End Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_03", Hash: "0xDE11CBCF" },
+        { name: "Precision Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_04", Hash: "0xEC9068CC" },
+        { name: "Heavy Duty Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_05", Hash: "0x2E7957A" },
+        { name: "Slanted Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_06", Hash: "0x347EF8AC" },
+        { name: "Split-End Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_07", Hash: "0x4DB62ABE" },
+        { name: "Default Barrel", Hash_Key: "COMPONENT_AT_CR_BARREL_01", Hash: "0x833637FF" },
+        { name: "Heavy Barrel", Hash_Key: "COMPONENT_AT_CR_BARREL_02", Hash: "0x8B3C480B" },
+        { name: "Digital Camo", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO", Hash: "0x4BDD6F16" },
+        { name: "Brushstroke Camo", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_02", Hash: "0x406A7908" },
+        { name: "Woodland Camo", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_03", Hash: "0x2F3856A4" },
+        { name: "Skull", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_04", Hash: "0xE50C424D" },
+        { name: "Sessanta Nove", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_05", Hash: "0xD37D1F2F" },
+        { name: "Perseus", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_06", Hash: "0 x86268483" },
+        { name: "Leopard", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_07", Hash: "0xF420E076" },
+        { name: "Zebra", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_08", Hash: "0xAAE14DF8" },
+        { name: "Geometric", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_09", Hash: "0x9893A95D" },
+        { name: "Boom!", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_10", Hash: "0x6B13CD3E" },
+        { name: "Patriotic", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_IND_01", Hash: "0xDA55CD3F" },
+    ]},
+    {name: "Switchblade", type: WEAPONTYPE.MELEE, Hash: "WEAPON_SWITCHBLADE", Model_Hash_Key: "w_me_switchblade", Description: "From your pocket to hilt-deep in the other guy's ribs in under a second: folding knives will never go out of style. Part of Executives and Other Criminals.",
+    Components: [// Switchblade
+        { name: "Default Handle", Hash_Key: "COMPONENT_SWITCHBLADE_VARMOD_BASE", Hash: "0x9137A500" },
+        { name: "VIP Variant", Hash_Key: "COMPONENT_SWITCHBLADE_VARMOD_VAR1", Hash: "0x5B3E7DB6" },
+        { name: "Bodyguard Variant", Hash_Key: "COMPONENT_SWITCHBLADE_VARMOD_VAR2", Hash: "0xE7939662" },
+    ]},
+    {name: "Hatchet", type: WEAPONTYPE.MELEE, Hash: "WEAPON_HATCHET", Model_Hash_Key: "w_me_hatchet", Description: "Make kindling... of your pals with this easy to wield, easy to hide hatchet. Exclusive content for returning players.",
+    Components: []},
+    {name: "Bottle", type: WEAPONTYPE.MELEE, Hash: "WEAPON_BOTTLE", Model_Hash_Key: "w_me_bottle", Description: "It's not clever and it's not pretty but, most of the time, neither is the guy coming at you with a knife. When all else fails, this gets the job done. Part of the Beach Bum Pack.",
+    Components: []},
+    {name: "The Shocker", type: WEAPONTYPE.MELEE, Hash: "WEAPON_STUNROD", Model_Hash_Key: "W_ME_Rod_M41", Description: "When blunt force trauma just isn't enough, consider diversifying your approach to aggravated assault with a dose of 30,000 volts.",
+    Components: []},
+    {name: "Machete", type: WEAPONTYPE.MELEE, Hash: "WEAPON_MACHETE", Model_Hash_Key: "w_me_machette_lr", Description: "America's West African arms trade isn't just about giving. Rediscover the simple life with this rusty cleaver. Part of Lowriders.",
+    Components:[]},
+    {name: "Baseball Bat", type: WEAPONTYPE.MELEE, Hash: "WEAPON_BAT", Model_Hash_Key: "w_me_bat", Description: "Aluminum baseball bat with leather grip. Lightweight yet powerful for all you big hitters out there.",
+    Components: [
+    ]},
+    {name: "Knife", type: WEAPONTYPE.MELEE, Hash: "WEAPON_KNIFE", Model_Hash_Key: "w_me_knife_01", Description: "This carbon steel 7 bladed knife is dual edged with a serrated spine to provide improved stabbing and thrusting capabilities.",
+    Components: []}
 ]
 
 export const FiveVWeaponComponents : fiveVWeaponComponent[] = [
 
-    // Switchblade
-    { name: "Default Handle", Hash_Key: "COMPONENT_SWITCHBLADE_VARMOD_BASE", Hash: "0x9137A500" },
-    { name: "VIP Variant", Hash_Key: "COMPONENT_SWITCHBLADE_VARMOD_VAR1", Hash: "0x5B3E7DB6" },
-    { name: "Bodyguard Variant", Hash_Key: "COMPONENT_SWITCHBLADE_VARMOD_VAR2", Hash: "0xE7939662" },
+
 
     // Pistols
     { name: "Default Clip", Hash_Key: "COMPONENT_PISTOL_CLIP_01", Hash: "0xFED0FD71" },
@@ -525,55 +591,7 @@ export const FiveVWeaponComponents : fiveVWeaponComponent[] = [
 
 
 
-    // Special Carbine
-    { name: "Default Clip", Hash_Key: "COMPONENT_SPECIALCARBINE_CLIP_01", Hash: "0xC6C7E581" },
-    { name: "Extended Clip", Hash_Key: "COMPONENT_SPECIALCARBINE_CLIP_02", Hash: "0x7C8BD10E" },
-    { name: "Drum Magazine", Hash_Key: "COMPONENT_SPECIALCARBINE_CLIP_03", Hash: "0x6B59AEAA" },
-    { name: "Flashlight", Hash_Key: "COMPONENT_AT_AR_FLSH", Hash: "0x7BC4CDDC" },
-    { name: "Scope", Hash_Key: "COMPONENT_AT_SCOPE_MEDIUM", Hash: "0xA0D89C42" },
-    { name: "Suppressor", Hash_Key: "COMPONENT_AT_AR_SUPP_02", Hash: "0xA73D4664" },
-    { name: "Grip", Hash_Key: "COMPONENT_AT_AR_AFGRIP", Hash: "0xC164F53" },
-    { name: "Etched Gun Metal Finish", Hash_Key: "COMPONENT_SPECIALCARBINE_VARMOD_LOWRIDER", Hash: "0x730154F2" },
 
-
-
-
-
-
-
-    // Carbine Rifle Mk II
-    { name: "Default Clip", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_01", Hash: "0x4C7A391E" },
-    { name: "Extended Clip", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_02", Hash: "0x5DD5DBD5" },
-    { name: "Tracer Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_TRACER", Hash: "0x1757F566" },
-    { name: "Incendiary Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_INCENDIARY", Hash: "0x3D25C2A7" },
-    { name: "Armor Piercing Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_ARMORPIERCING", Hash: "0x255D5D57" },
-    { name: "Full Metal Jacket Rounds", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CLIP_FMJ", Hash: "0x44032F11" },
-    { name: "Grip", Hash_Key: "COMPONENT_AT_AR_AFGRIP_02", Hash: "0x9D65907A" },
-    { name: "Flashlight", Hash_Key: "COMPONENT_AT_AR_FLSH", Hash: "0x7BC4CDDC" },
-    { name: "Holographic Sight", Hash_Key: "COMPONENT_AT_SIGHTS", Hash: "0x420FD713" },
-    { name: "Small Scope", Hash_Key: "COMPONENT_AT_SCOPE_MACRO_MK2", Hash: "0x49B2945" },
-    { name: "Medium Scope", Hash_Key: "COMPONENT_AT_SCOPE_MEDIUM_MK2", Hash: "0xC66B6542" },
-    { name: "Suppressor", Hash_Key: "COMPONENT_AT_AR_SUPP", Hash: "0x837445AA" },
-    { name: "Flat Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_01", Hash: "0xB99402D4" },
-    { name: "Tactical Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_02", Hash: "0xC867A07B" },
-    { name: "Fat-End Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_03", Hash: "0xDE11CBCF" },
-    { name: "Precision Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_04", Hash: "0xEC9068CC" },
-    { name: "Heavy Duty Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_05", Hash: "0x2E7957A" },
-    { name: "Slanted Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_06", Hash: "0x347EF8AC" },
-    { name: "Split-End Muzzle Brake", Hash_Key: "COMPONENT_AT_MUZZLE_07", Hash: "0x4DB62ABE" },
-    { name: "Default Barrel", Hash_Key: "COMPONENT_AT_CR_BARREL_01", Hash: "0x833637FF" },
-    { name: "Heavy Barrel", Hash_Key: "COMPONENT_AT_CR_BARREL_02", Hash: "0x8B3C480B" },
-    { name: "Digital Camo", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO", Hash: "0x4BDD6F16" },
-    { name: "Brushstroke Camo", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_02", Hash: "0x406A7908" },
-    { name: "Woodland Camo", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_03", Hash: "0x2F3856A4" },
-    { name: "Skull", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_04", Hash: "0xE50C424D" },
-    { name: "Sessanta Nove", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_05", Hash: "0xD37D1F2F" },
-    { name: "Perseus", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_06", Hash: "0 x86268483" },
-    { name: "Leopard", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_07", Hash: "0xF420E076" },
-    { name: "Zebra", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_08", Hash: "0xAAE14DF8" },
-    { name: "Geometric", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_09", Hash: "0x9893A95D" },
-    { name: "Boom!", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_10", Hash: "0x6B13CD3E" },
-    { name: "Patriotic", Hash_Key: "COMPONENT_CARBINERIFLE_MK2_CAMO_IND_01", Hash: "0xDA55CD3F" },
 
 
 
