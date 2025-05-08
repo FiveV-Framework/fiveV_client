@@ -1,16 +1,15 @@
 import {GTADLC} from "../utils/ungrouped";
 
-export interface FiveVWeapon {
+export interface fiveVWeapon {
     name: string;
     type: WEAPONTYPE;
     Hash: string;
     Model_Hash_Key: string;
-    DLC: GTADLC;
     Description: string;
-    Components: string[];
+    Components: fiveVWeaponComponent[];
 }
 
-export interface FiveVWeaponComponent { //TO BE USED LATER
+export interface fiveVWeaponComponent { //TO BE USED LATER
     name: string;
     Hash_Key: string;
     Hash: string;
