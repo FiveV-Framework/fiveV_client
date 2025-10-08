@@ -8,9 +8,11 @@ export * from "./@types/entity";
 export * from "./Class/FiveVPlayer";
 export * from "./Class/FiveVVehicle";
 export * from "./Class/FiveVEntity";
+export * from "./Class/FiveVWeapon";
 
 //Utils
 export * from "./utils/Vector3";
 export * from "./utils/network";
 export * from "./utils/Transformer";
 export * from "./utils/ungrouped";
+export * from "./utils/weapons";
