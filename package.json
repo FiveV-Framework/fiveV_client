@@ -22,7 +22,7 @@
   "homepage": "https://github.com/FiveV-Framework/fiveV_client#readme",
   "dependencies": {
     "@types/node": "^22.13.13",
-    "esbuild": "^0.25.1",
+    "esbuild": "^0.27.0",
     "rimraf": "^6.0.1"
   },
   "devDependencies": {
