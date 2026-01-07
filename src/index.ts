@@ -14,6 +14,7 @@ export * from "./Class/FiveVCamera";
 export * from "./Class/FiveVObject";
 export * from "./Class/FiveVWorld";
 export * from "./Class/FiveVUI";
+export * from "./Class/FiveVWeapon";
 
 // Utils
 export * from "./utils/Vector3";
@@ -21,3 +22,4 @@ export * from "./utils/network";
 export * from "./utils/Transformer";
 export * from "./utils/ungrouped";
 export * from "./utils/FiveVStreaming";
+export * from "./utils/weapons";
