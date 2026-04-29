@@ -1,31 +1,67 @@
-import {CONTROL_INPUTS_ACTION, HUDCOMPONENT, PEDCONFIGFLAGS} from "../@types/player";
-import {Vector3} from "../utils/Vector3";
-import {TransformNumberArrayInVector3} from "../utils/Transformer";
-import {FiveVWeapon} from "../@types/weapon";
-import {FiveVVehicle} from "./FiveVVehicle";
+import { CONTROL_INPUTS_ACTION, HUDCOMPONENT, PEDCONFIGFLAGS } from "../@types/player";
+import { Vector3 } from "../utils/Vector3";
+import { TransformNumberArrayInVector3 } from "../utils/Transformer";
+import { FiveVVehicle } from "./FiveVVehicle";
+import { FiveVPed } from "./FiveVPed";
+import { SEATPOSITION } from "../@types/vehicle";
 
+/**
+ * Static class for local player operations.
+ * For operations on the player's ped, use `FiveVPlayer.ped` to get a FiveVPed instance.
+ */
 export class FiveVPlayer {
 
+    // ==================== PED REFERENCE ====================
+
     /**
-     * Gibt den Player zurück
-     * @returns Den Player als number
+     * Returns the player's ped as a FiveVPed instance for full ped operations
+     * @returns A FiveVPed instance representing the player's ped
      */
-    static get player(): number {
+    static get ped(): FiveVPed {
+        return new FiveVPed(PlayerPedId());
+    }
+
+    /**
+     * Returns the player ped handle
+     * @returns The player ped as a number
+     */
+    static get handle(): number {
         return PlayerPedId();
     }
+
     /**
-     * Gibt die Position des Players zurück
-     * @returns Die Position in einem {@link Vector3}.
-     * @see [GetntityCoords](https://docs.fivem.net/natives/?_0x3FEF770D40960D5A) für weitere Informationen.
+     * Returns the player ID
+     * @returns The player ID
+     * @see [PlayerId](https://docs.fivem.net/natives/?_0x4F8644AF03D0E0D6) for more information.
+     */
+    static get playerId(): number {
+        return PlayerId();
+    }
+
+    /**
+     * Returns the server ID of the local player
+     * @returns The server ID
+     * @see [GetPlayerServerId](https://docs.fivem.net/natives/?_0x4D9CEEE02FEF) for more information.
+     */
+    static get serverId(): number {
+        return GetPlayerServerId(PlayerId());
+    }
+
+    // ==================== POSITION & ROTATION ====================
+
+    /**
+     * Returns the position of the player
+     * @returns The position as a {@link Vector3}.
+     * @see [GetEntityCoords](https://docs.fivem.net/natives/?_0x3FEF770D40960D5A) for more information.
      */
     static get position(): Vector3 {
         return TransformNumberArrayInVector3(GetEntityCoords(PlayerPedId(), true));
     }
 
     /**
-     * Setzt die Position des Players.
-     * @param newPosition Die Position in einem {@link Vector3} oder einem NumberArray.
-     * @see [SetEntityCoords](https://docs.fivem.net/natives/?_0xDF70B41B) für weitere Informationen.
+     * Sets the position of the player
+     * @param newPosition The position as a {@link Vector3} or a number array.
+     * @see [SetEntityCoords](https://docs.fivem.net/natives/?_0xDF70B41B) for more information.
      */
     static set position(newPosition: Vector3 | [x: number, y: number, z: number]) {
         if (Array.isArray(newPosition)) {
@@ -39,245 +75,448 @@ export class FiveVPlayer {
     }
 
     /**
-     * Gibt die Rotation des Players zurück
-     * @returns Die Rotation in einem {@link Vector3}.
-     * @see [GetEntityRotation](https://docs.fivem.net/natives/?_0x8FF45B04) für weitere Informationen.
+     * Returns the rotation of the player
+     * @returns The rotation as a {@link Vector3}.
+     * @see [GetEntityRotation](https://docs.fivem.net/natives/?_0x8FF45B04) for more information.
      */
     static get rotation(): Vector3 {
-        return TransformNumberArrayInVector3(GetEntityRotation(PlayerPedId(),2));
+        return TransformNumberArrayInVector3(GetEntityRotation(PlayerPedId(), 2));
     }
 
     /**
-     * Setzt die Rotation des Players.
-     * @param newRotation Die Rotation in einem {@link Vector3} oder einem NumberArray.
-     * @see [SetEntityRotation](https://docs.fivem.net/natives/?_0xA345EFE) und [RequestCollisionAtCoord](https://docs.fivem.net/natives/?_0x07503F7948F491A7) für weitere Informationen.
+     * Sets the rotation of the player
+     * @param newRotation The rotation as a {@link Vector3} or a number array.
+     * @see [SetEntityRotation](https://docs.fivem.net/natives/?_0xA345EFE) for more information.
      */
     static set rotation(newRotation: Vector3 | [x: number, y: number, z: number]) {
         if (Array.isArray(newRotation)) {
             const [x, y, z] = newRotation;
-            RequestCollisionAtCoord(x, y, z);
             SetEntityRotation(PlayerPedId(), x, y, z, 2, false);
         } else {
-            RequestCollisionAtCoord(newRotation.x, newRotation.y, newRotation.z);
             SetEntityRotation(PlayerPedId(), newRotation.x, newRotation.y, newRotation.z, 2, false);
         }
     }
 
     /**
-     * Gibt das Heading des Players zurück
-     * @returns Das Heading als number
-     * @see [GetEntityHeading](https://docs.fivem.net/natives/?_0x972CC383) für weitere Informationen.
+     * Returns the heading of the player
+     * @returns The heading as a number (0-360 degrees)
+     * @see [GetEntityHeading](https://docs.fivem.net/natives/?_0x972CC383) for more information.
      */
-    static get heading() : number {
+    static get heading(): number {
         return GetEntityHeading(PlayerPedId());
     }
 
     /**
-     * Setzt das Heading des Players
-     * @param newheading
-     * @see [SetEntityHeading](https://docs.fivem.net/natives/?_0xE0FF064D) für weitere Informationen.
+     * Sets the heading of the player
+     * @param newHeading The heading (0-360 degrees)
+     * @see [SetEntityHeading](https://docs.fivem.net/natives/?_0xE0FF064D) for more information.
      */
-    static set heading(newheading: number) {
-        SetEntityHeading(PlayerPedId(), newheading);
+    static set heading(newHeading: number) {
+        SetEntityHeading(PlayerPedId(), newHeading);
     }
 
     /**
-     * Gibt das Kamera Heading des Players zurück
-     * @returns Das Heading als number
-     * @see [GetGameplayCamRelativeHeading](https://docs.fivem.net/natives/?_0x743607648ADD4587) für weitere Informationen.
+     * Returns the camera heading relative to the player
+     * @returns The camera heading as a number
+     * @see [GetGameplayCamRelativeHeading](https://docs.fivem.net/natives/?_0x743607648ADD4587) for more information.
      */
-    static get camHeading() : number {
+    static get camHeading(): number {
         return GetGameplayCamRelativeHeading();
     }
 
+    // ==================== ENTITY PROPERTIES ====================
+
     /**
-     * Gibt zurück, ob die Collision des Players disabled ist
-     * @returns true wenn die Collision aktiviert ist - false wenn deaktiviert
-     * @see [GetEntityCollisionDisabled](https://docs.fivem.net/natives/?_0xCCF1E97BEFDAE480) / {@link TransformNumberArrayInVector3} für weitere Informationen.
+     * Returns whether collision is enabled for the player
+     * @returns true if collision is enabled, false if disabled
+     * @see [GetEntityCollisionDisabled](https://docs.fivem.net/natives/?_0xCCF1E97BEFDAE480) for more information.
      */
     static get collision(): boolean {
         return !GetEntityCollisionDisabled(PlayerPedId());
     }
 
     /**
-     * Ändert den Collision Status des Players
-     * @param enable true, wenn man die Collision aktivieren möchte, false wenn man die disablen möchte
-     * @see [SetEntityCollision](https://docs.fivem.net/natives/?_0x1A9205C1B9EE827F) für weitere Informationen.
+     * Sets the collision state of the player
+     * @param enable true to enable collision, false to disable
+     * @see [SetEntityCollision](https://docs.fivem.net/natives/?_0x1A9205C1B9EE827F) for more information.
      */
     static set collision(enable: boolean) {
         SetEntityCollision(PlayerPedId(), enable, true);
     }
 
     /**
-     * Gibt zurück, ob der Players gefreezed ist
-     * @returns true wenn der Players gefreezed ist - false wenn deaktiviert
-     * @see [IsEntityPositionFrozen](https://docs.fivem.net/natives/?_0xEDBE6ADD) für weitere Informationen.
+     * Returns whether the player is frozen
+     * @returns true if frozen, false otherwise
+     * @see [IsEntityPositionFrozen](https://docs.fivem.net/natives/?_0xEDBE6ADD) for more information.
      */
     static get frozen(): boolean {
         return IsEntityPositionFrozen(PlayerPedId());
     }
 
     /**
-     * Ändert den Freeze Status des Players
-     * @param enable true, wenn man den Player freezen möchte, false, wenn man den freeze disablen möchte
-     * @see [FreezeEntityPosition](https://docs.fivem.net/natives/?_0x65C16D57) für weitere Informationen.
+     * Sets the freeze state of the player
+     * @param enable true to freeze, false to unfreeze
+     * @see [FreezeEntityPosition](https://docs.fivem.net/natives/?_0x65C16D57) for more information.
      */
     static set frozen(enable: boolean) {
         FreezeEntityPosition(PlayerPedId(), enable);
     }
 
     /**
-     * Gibt zurück, ob der Players Invincible (Unverwundbar) ist
-     * @returns true wenn der Players Invincible ist - false wenn nicht
-     * @see [GetPlayerInvincible](https://docs.fivem.net/natives/?_0x680C90EE) für weitere Informationen.
+     * Returns whether the player is invincible
+     * @returns true if invincible, false otherwise
+     * @see [GetPlayerInvincible](https://docs.fivem.net/natives/?_0x680C90EE) for more information.
      */
     static get invincible(): boolean {
-        return GetPlayerInvincible(PlayerPedId());
+        return GetPlayerInvincible(PlayerId());
     }
 
     /**
-     * Ändert den Invincible (Unverwundbar) Status des Players
-     * @param enable true, wenn man den Player invincible (Unverwundbar) machen möchte, false, wenn man den Spieler wieder verwundbar machen möchte
-     * @see [SetEntityInvincible](https://docs.fivem.net/natives/?_0x3882114BDE571AD4) für weitere Informationen.
+     * Sets the invincibility state of the player
+     * @param enable true for invincible, false for vulnerable
+     * @see [SetPlayerInvincible](https://docs.fivem.net/natives/?_0x239528EACDC3E7DE) for more information.
      */
     static set invincible(enable: boolean) {
-        SetEntityInvincible(PlayerPedId(), enable);
+        SetPlayerInvincible(PlayerId(), enable);
     }
 
     /**
-     * Gibt zurück, ob der Players Invisible (Unsichtbar) ist
-     * @returns true wenn der Players gefreezed ist - false wenn deaktiviert
-     * @see [IsEntityVisible](https://docs.fivem.net/natives/?_0x47D6F43D77935C75) für weitere Informationen.
+     * Returns whether the player is visible
+     * @returns true if visible, false if invisible
+     * @see [IsEntityVisible](https://docs.fivem.net/natives/?_0x47D6F43D77935C75) for more information.
      */
-    static get invisible(): boolean {
+    static get visible(): boolean {
         return IsEntityVisible(PlayerPedId());
     }
 
     /**
-     * Ändert den Invisible (Unsichtbar) Status des Players
-     * @param enable true, wenn man den Player invisible (Unsichtbar) machen möchte, false, wenn man den Spieler wieder visible machen möchte
-     * @see [SetEntityVisible](https://docs.fivem.net/natives/?_0xEA1C610A04DB6BBB) für weitere Informationen.
+     * Sets the visibility of the player
+     * @param enable true to make visible, false to hide
+     * @see [SetEntityVisible](https://docs.fivem.net/natives/?_0xEA1C610A04DB6BBB) for more information.
      */
-    static set invisible(enable: boolean) {
+    static set visible(enable: boolean) {
         SetEntityVisible(PlayerPedId(), enable, false);
     }
 
+    // ==================== HEALTH & ARMOR ====================
+
     /**
-     * Disabled einen bestimmten Key aus der Control_Action Liste
-     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
-     * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
-     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     * Returns the health of the player
+     * @returns The health value
+     * @see [GetEntityHealth](https://docs.fivem.net/natives/?_0xEEF059FAD016D209) for more information.
      */
-     public static disableKey(padIndex: number = 0, key: number | CONTROL_INPUTS_ACTION) {
+    static get health(): number {
+        return GetEntityHealth(PlayerPedId());
+    }
+
+    /**
+     * Sets the health of the player
+     * @param value The health value
+     * @see [SetEntityHealth](https://docs.fivem.net/natives/?_0x6B76DC1F) for more information.
+     */
+    static set health(value: number) {
+        SetEntityHealth(PlayerPedId(), value);
+    }
+
+    /**
+     * Returns the maximum health of the player
+     * @returns The maximum health value
+     * @see [GetEntityMaxHealth](https://docs.fivem.net/natives/?_0x15D757606D170C3C) for more information.
+     */
+    static get maxHealth(): number {
+        return GetEntityMaxHealth(PlayerPedId());
+    }
+
+    /**
+     * Returns the armor of the player
+     * @returns The armor value
+     * @see [GetPedArmour](https://docs.fivem.net/natives/?_0x9483AF821605B1D8) for more information.
+     */
+    static get armor(): number {
+        return GetPedArmour(PlayerPedId());
+    }
+
+    /**
+     * Sets the armor of the player
+     * @param value The armor value (0-100)
+     * @see [SetPedArmour](https://docs.fivem.net/natives/?_0xCEA04D83135264CC) for more information.
+     */
+    static set armor(value: number) {
+        SetPedArmour(PlayerPedId(), value);
+    }
+
+    // ==================== CONTROLS ====================
+
+    /**
+     * Disables a specific control key
+     * @param padIndex Control group (0 = default)
+     * @param key The key as {@link CONTROL_INPUTS_ACTION} or number
+     * @see [DisableControlAction](https://docs.fivem.net/natives/?_0xFE99B66D079CF6BC) for more information.
+     */
+    public static disableKey(padIndex: number = 0, key: CONTROL_INPUTS_ACTION | number): void {
         DisableControlAction(padIndex, key, true);
     }
 
     /**
-     * Enabled einen bestimmten Key aus der Control_Action Liste
-     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
-     * @param key Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
-     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     * Enables a specific control key
+     * @param padIndex Control group (0 = default)
+     * @param key The key as {@link CONTROL_INPUTS_ACTION} or number
+     * @see [EnableControlAction](https://docs.fivem.net/natives/?_0x351220255D64C155) for more information.
      */
-    public static enableKey(padIndex: number = 0, key: number | CONTROL_INPUTS_ACTION) {
+    public static enableKey(padIndex: number = 0, key: CONTROL_INPUTS_ACTION | number): void {
         EnableControlAction(padIndex, key, true);
     }
 
     /**
-     * Disabled bestimmte Keys aus der Control_Action Liste
-     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
-     * @param keys Nummer aus der Liste {@link CONTROL_INPUTS_ACTION} oder eine Nummer
-     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     * Disables multiple control keys
+     * @param padIndex Control group (0 = default)
+     * @param keys Array of keys as {@link CONTROL_INPUTS_ACTION} or numbers
+     * @see [DisableControlAction](https://docs.fivem.net/natives/?_0xFE99B66D079CF6BC) for more information.
      */
-    public static disableKeys(padIndex: number = 0, keys: number[] | CONTROL_INPUTS_ACTION[]) {
-        for (let i = 0; i < keys.length - 1; i++) {
-            DisableControlAction(padIndex, keys[i], true);
+    public static disableKeys(padIndex: number = 0, keys: (CONTROL_INPUTS_ACTION | number)[]): void {
+        for (const key of keys) {
+            DisableControlAction(padIndex, key, true);
         }
     }
 
     /**
-     * Enabled bestimmte Keys aus der Control_Action Liste
-     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
-     * @param keys Array aus der Liste {@link CONTROL_INPUTS_ACTION} oder aus Nummern
-     * @see [Controls](https://docs.fivem.net/docs/game-references/controls/) für weitere Informationen.
+     * Enables multiple control keys
+     * @param padIndex Control group (0 = default)
+     * @param keys Array of keys as {@link CONTROL_INPUTS_ACTION} or numbers
+     * @see [EnableControlAction](https://docs.fivem.net/natives/?_0x351220255D64C155) for more information.
      */
-    public static enableKeys(padIndex: number = 0, keys: number[] | CONTROL_INPUTS_ACTION[]) {
-        for (let i = 0; i < keys.length - 1; i++) {
-            EnableControlAction(padIndex, keys[i], true);
+    public static enableKeys(padIndex: number = 0, keys: (CONTROL_INPUTS_ACTION | number)[]): void {
+        for (const key of keys) {
+            EnableControlAction(padIndex, key, true);
         }
     }
 
+    /**
+     * Checks if a control is currently pressed
+     * @param padIndex Control group (0 = default)
+     * @param key The key to check
+     * @returns true if pressed, false otherwise
+     * @see [IsControlPressed](https://docs.fivem.net/natives/?_0xF3A21BCD95725A4A) for more information.
+     */
+    public static isControlPressed(padIndex: number = 0, key: CONTROL_INPUTS_ACTION | number): boolean {
+        return IsControlPressed(padIndex, key);
+    }
 
     /**
-     * Prüft, ob der Player eine Waffe in der Hand hält und wenn, dann gibt er die jeweilige {@link FiveVWeapon} zurück
-     * @returns die Nummer des Hashkeys (Der Link zur Waffe kommt später{@link FiveVWeapon}) der jeweiligen Waffe, welche der Spieler in der Hand hat. Sollte der Spieler keine Waffe in der Hand haben,
-     * gibt es einen leeren String
+     * Checks if a control was just pressed this frame
+     * @param padIndex Control group (0 = default)
+     * @param key The key to check
+     * @returns true if just pressed, false otherwise
+     * @see [IsControlJustPressed](https://docs.fivem.net/natives/?_0x580417101DDB492F) for more information.
      */
-    static get currentWeapon(): number {
-        const [_, weapon] = GetCurrentPedWeapon(PlayerPedId(), true);
-        /*for (let i = 0; i < FiveVWeapons.length -1; i++) {
-            if (weapon === GetHashKey(FiveVWeapons[i].Hash)){
-                return FiveVWeapons[i];
-            }
-        }*/
+    public static isControlJustPressed(padIndex: number = 0, key: CONTROL_INPUTS_ACTION | number): boolean {
+        return IsControlJustPressed(padIndex, key);
+    }
+
+    /**
+     * Checks if a control was just released this frame
+     * @param padIndex Control group (0 = default)
+     * @param key The key to check
+     * @returns true if just released, false otherwise
+     * @see [IsControlJustReleased](https://docs.fivem.net/natives/?_0x50F940259D3841E6) for more information.
+     */
+    public static isControlJustReleased(padIndex: number = 0, key: CONTROL_INPUTS_ACTION | number): boolean {
+        return IsControlJustReleased(padIndex, key);
+    }
+
+    /**
+     * Disables all attack-related controls
+     * @param padIndex Control group (0 = default)
+     */
+    public static disableAttack(padIndex: number = 0): void {
+        const attackKeys = [
+            CONTROL_INPUTS_ACTION.INPUT_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED,
+            CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
+        ];
+        this.disableKeys(padIndex, attackKeys);
+    }
+
+    /**
+     * Enables all attack-related controls
+     * @param padIndex Control group (0 = default)
+     */
+    public static enableAttack(padIndex: number = 0): void {
+        const attackKeys = [
+            CONTROL_INPUTS_ACTION.INPUT_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2,
+            CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL,
+            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED,
+            CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1,
+            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
+        ];
+        this.enableKeys(padIndex, attackKeys);
+    }
+
+    /**
+     * Disables player firing for this frame
+     * @see [DisablePlayerFiring](https://docs.fivem.net/natives/?_0xC6654015BDA42AD0) for more information.
+     */
+    public static disableFiring(): void {
+        DisablePlayerFiring(PlayerId(), true);
+    }
+
+    /**
+     * Enables player firing for this frame
+     * @see [DisablePlayerFiring](https://docs.fivem.net/natives/?_0xC6654015BDA42AD0) for more information.
+     */
+    public static enableFiring(): void {
+        DisablePlayerFiring(PlayerId(), false);
+    }
+
+    // ==================== WEAPONS ====================
+
+    /**
+     * Returns the hash of the current weapon
+     * @returns The weapon hash
+     * @see [GetCurrentPedWeapon](https://docs.fivem.net/natives/?_0x3A87E44BB9A01D54) for more information.
+     */
+    static get currentWeaponHash(): number {
+        const [, weapon] = GetCurrentPedWeapon(PlayerPedId(), true);
         return weapon;
     }
 
     /**
-     * Gibt das Fahrzeug, in welchem ein Spieler sich gerade befindet, zurück
-     * @returns {@link FiveMVehicle}
+     * Gives a weapon to the player
+     * @param weaponHash The weapon hash
+     * @param ammo The amount of ammo
+     * @param isHidden Whether to hide the weapon
+     * @param forceInHand Whether to force the weapon in hand
      */
-    static get vehicle() : FiveVVehicle {
-        return new FiveVVehicle(GetVehiclePedIsIn(PlayerPedId(), false));
+    public static giveWeapon(weaponHash: number, ammo: number, isHidden: boolean = false, forceInHand: boolean = true): void {
+        GiveWeaponToPed(PlayerPedId(), weaponHash, ammo, isHidden, forceInHand);
     }
 
     /**
-     * Enabled eine bestimmte PED Config Flag
-     * @param flagId Nummer der Config Flag oder {@link PEDCONFIGFLAGS}
-     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     * Removes a weapon from the player
+     * @param weaponHash The weapon hash to remove
      */
-    public static enableConfigFlag(flagId: number | PEDCONFIGFLAGS) {
+    public static removeWeapon(weaponHash: number): void {
+        RemoveWeaponFromPed(PlayerPedId(), weaponHash);
+    }
+
+    /**
+     * Removes all weapons from the player
+     */
+    public static removeAllWeapons(): void {
+        RemoveAllPedWeapons(PlayerPedId(), true);
+    }
+
+    // ==================== VEHICLE ====================
+
+    /**
+     * Returns the vehicle the player is currently in
+     * @returns A FiveVVehicle instance, or null if not in a vehicle
+     * @see [GetVehiclePedIsIn](https://docs.fivem.net/natives/?_0x9A9112A0FE9A4713) for more information.
+     */
+    static get vehicle(): FiveVVehicle | null {
+        if (!IsPedInAnyVehicle(PlayerPedId(), false)) return null;
+        const veh = GetVehiclePedIsIn(PlayerPedId(), false);
+        return veh !== 0 ? new FiveVVehicle(veh) : null;
+    }
+
+    /**
+     * Returns the last vehicle the player was in
+     * @returns A FiveVVehicle instance, or null if never in a vehicle
+     */
+    static get lastVehicle(): FiveVVehicle | null {
+        const veh = GetVehiclePedIsIn(PlayerPedId(), true);
+        return veh !== 0 ? new FiveVVehicle(veh) : null;
+    }
+
+    /**
+     * Returns whether the player is in the driver seat
+     * @returns true if in driver seat, false otherwise
+     */
+    static get isDriver(): boolean {
+        if (!this.isInVehicle) return false;
+        const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
+        return GetPedInVehicleSeat(vehicle, SEATPOSITION.SF_FrontDriverSide) === PlayerPedId();
+    }
+
+    // ==================== CONFIG FLAGS ====================
+
+    /**
+     * Enables a ped config flag
+     * @param flagId The flag ID as {@link PEDCONFIGFLAGS} or number
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) for more information.
+     */
+    public static enableConfigFlag(flagId: PEDCONFIGFLAGS | number): void {
         SetPedConfigFlag(PlayerPedId(), flagId, true);
     }
 
     /**
-     * Disabled eine bestimmte PED Config Flag
-     * @param flagId Nummer der Config Flag oder {@link PEDCONFIGFLAGS}
-     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     * Disables a ped config flag
+     * @param flagId The flag ID as {@link PEDCONFIGFLAGS} or number
+     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) for more information.
      */
-    public static disableConfigFlag(flagId: number | PEDCONFIGFLAGS) {
+    public static disableConfigFlag(flagId: PEDCONFIGFLAGS | number): void {
         SetPedConfigFlag(PlayerPedId(), flagId, false);
     }
 
     /**
-     * Enabled bestimmte PED Config Flags
-     * @param flagIds Nummer Array  der Config Flag oder {@link PEDCONFIGFLAGS} Array
-     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     * Enables multiple ped config flags
+     * @param flagIds Array of flag IDs
      */
-    public static enableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
-        for (let i = 0; i < flagIds.length - 1; i++) {
-            SetPedConfigFlag(PlayerPedId(), flagIds[i], true);
+    public static enableConfigFlags(flagIds: (PEDCONFIGFLAGS | number)[]): void {
+        for (const flag of flagIds) {
+            SetPedConfigFlag(PlayerPedId(), flag, true);
         }
     }
 
     /**
-     * Disabled bestimmte PED Config Flags
-     * @param flagIds Nummer Array der Config Flag oder {@link PEDCONFIGFLAGS} Array
-     * @see [SetPedConfigFlag](https://docs.fivem.net/natives/?_0x9CFBE10D) für weitere Informationen.
+     * Disables multiple ped config flags
+     * @param flagIds Array of flag IDs
      */
-    public static disableConfigFlags(flagIds: number[] | PEDCONFIGFLAGS[]) {
-        for (let i = 0; i < flagIds.length - 1; i++) {
-            SetPedConfigFlag(PlayerPedId(), flagIds[i], false);
+    public static disableConfigFlags(flagIds: (PEDCONFIGFLAGS | number)[]): void {
+        for (const flag of flagIds) {
+            SetPedConfigFlag(PlayerPedId(), flag, false);
         }
     }
 
     /**
-     * Prüft die aktiven Config Flags einer Person und gibt alle aktiven dann in Form eines Arrays zurück
-     * @returns Ein Array mit den aktiven {@link PEDCONFIGFLAGS} des Spielers
+     * Returns all active config flags
+     * @returns Array of active {@link PEDCONFIGFLAGS}
      */
     static get activeConfigFlags(): PEDCONFIGFLAGS[] {
         const activeFlags: PEDCONFIGFLAGS[] = [];
-
-        for (let flag in PEDCONFIGFLAGS) {
+        for (const flag in PEDCONFIGFLAGS) {
             const flagValue = Number(flag);
             if (!isNaN(flagValue)) {
                 if (GetPedConfigFlag(PlayerPedId(), flagValue, true)) {
@@ -288,117 +527,155 @@ export class FiveVPlayer {
         return activeFlags;
     }
 
-    /**
-     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
-     * Disabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler nicht mehr attacken kann
-     */
-    public static disableAttack(padIndex: number = 0) {
-        this.disableKeys(padIndex, [CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
-            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
-            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
-            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
-            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
-            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED, CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
-            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
-        ]);
-    }
+    // ==================== HUD ====================
 
     /**
-     * @param padIndex "Needs to be executed each frame. Control group 1 and 0 gives the same results as 2. Same results for all players" Standart = 0
-     * Enabled die nötigen {@link CONTROL_INPUT_ACTION}, dass der Spieler wieder attacken kann
+     * Hides HUD components for this frame
+     * @param components HUD component(s) to hide
+     * @see [HideHudComponentThisFrame](https://docs.fivem.net/natives/?_0x6806C51AD12B83B8) for more information.
      */
-    public static enableAttack(padIndex: number = 0) {
-        this.enableKeys(padIndex, [CONTROL_INPUTS_ACTION.INPUT_ATTACK, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON,
-            CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK, CONTROL_INPUTS_ACTION.INPUT_VEH_ATTACK2, CONTROL_INPUTS_ACTION.INPUT_VEH_PASSENGER_ATTACK,
-            CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_LIGHT, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK_HEAVY, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_MELEE,
-            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HANDGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SHOTGUN, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_HEAVY,
-            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SMG, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_AUTO_RIFLE, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SNIPER,
-            CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_SPECIAL, CONTROL_INPUTS_ACTION.INPUT_SELECT_WEAPON_UNARMED, CONTROL_INPUTS_ACTION.INPUT_PREV_WEAPON,
-            CONTROL_INPUTS_ACTION.INPUT_NEXT_WEAPON, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK1, CONTROL_INPUTS_ACTION.INPUT_MELEE_ATTACK2
-        ]);
-    }
-
-    /**
-     * Disabled das Abfeuern oder Schlagen für einen Frame
-     */
-    public static disableFiring() {
-        DisablePlayerFiring(PlayerPedId(), true);
-    }
-
-    /**
-     * Enabled das Abfeuern oder Schlagen für einen Frame
-     */
-    public static enableFiring() {
-        DisablePlayerFiring(PlayerPedId(), false);
-    }
-
-    /**
-     * Hided HUDs for den Frame
-     * @param hub als number/{@link HUDCOMPONENT} oder als numberArray/{@link HUDCOMPONENT}Array
-     */
-    public static hideHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT) {
-        if (Array.isArray(hub)) {
-            for (let i = 0; i < hub.length -1; i++) {
-                HideHudComponentThisFrame(hub[i]);
+    public static hideHUD(components: HUDCOMPONENT | number | (HUDCOMPONENT | number)[]): void {
+        if (Array.isArray(components)) {
+            for (const component of components) {
+                HideHudComponentThisFrame(component);
             }
         } else {
-            HideHudComponentThisFrame(hub);
+            HideHudComponentThisFrame(components);
         }
     }
 
     /**
-     * Zeigt HUDs for den Frame
-     * @param hub als number/{@link HUDCOMPONENT} oder als numberArray/{@link HUDCOMPONENT}Array
+     * Shows HUD components for this frame
+     * @param components HUD component(s) to show
+     * @see [ShowHudComponentThisFrame](https://docs.fivem.net/natives/?_0x0B4DF1FA60C0E664) for more information.
      */
-    public static showHUD(hub: number[] | HUDCOMPONENT[] | number | HUDCOMPONENT) {
-        if (Array.isArray(hub)) {
-            for (let i = 0; i < hub.length -1; i++) {
-                HideHudComponentThisFrame(hub[i]);
+    public static showHUD(components: HUDCOMPONENT | number | (HUDCOMPONENT | number)[]): void {
+        if (Array.isArray(components)) {
+            for (const component of components) {
+                ShowHudComponentThisFrame(component);
             }
         } else {
-            HideHudComponentThisFrame(hub);
+            ShowHudComponentThisFrame(components);
         }
     }
 
+    // ==================== STATE CHECKS ====================
 
-    // WHERE IS PLAYER
     /**
-     * Prüft ob der Spieler gerade fällt
-     * @returns true - der Spieler fällt, false - der Spieler fällt nicht
+     * Returns whether the player is falling
+     * @returns true if falling, false otherwise
+     * @see [IsPedFalling](https://docs.fivem.net/natives/?_0xFB92A102F1C4DFA3) for more information.
      */
-    static get isFalling() : boolean {
+    static get isFalling(): boolean {
         return IsPedFalling(PlayerPedId());
     }
 
     /**
-     * Prüft ob der Spieler gerade im Wasser ist
-     * @returns true - der Spieler ist im Wasser, false - der Spieler ist nicht im Wasser
+     * Returns whether the player is in water
+     * @returns true if in water, false otherwise
+     * @see [IsEntityInWater](https://docs.fivem.net/natives/?_0xCFB0A0D8) for more information.
      */
-    static get isInWater() : boolean {
+    static get isInWater(): boolean {
         return IsEntityInWater(PlayerPedId());
     }
 
     /**
-     * Prüft ob der Spieler unter Wasser schwimmt
-     * @returns true - der Spieler schwimmt unter Wasser, false - der Spieler schwimmt nicht unter Wasser
+     * Returns whether the player is swimming underwater
+     * @returns true if underwater, false otherwise
+     * @see [IsPedSwimmingUnderWater](https://docs.fivem.net/natives/?_0x9DE327631295B4C2) for more information.
      */
-    static get isUnderWater() : boolean {
+    static get isUnderWater(): boolean {
         return IsPedSwimmingUnderWater(PlayerPedId());
     }
 
     /**
-     * Prüft ob der Spieler im Fahrzeug sitzt
-     * @returns true - der Spieler ist im Fahrzeug, false - der Spieler ist nicht im Fahrzeug
+     * Returns whether the player is in any vehicle
+     * @returns true if in a vehicle, false otherwise
+     * @see [IsPedInAnyVehicle](https://docs.fivem.net/natives/?_0x997ABD671D25CA0B) for more information.
      */
-    static get isInVehicle() : boolean {
-        return IsPedInAnyVehicle(PlayerPedId(), true);
+    static get isInVehicle(): boolean {
+        return IsPedInAnyVehicle(PlayerPedId(), false);
     }
 
     /**
-     * Prüft ob der Spieler im Armed ist (Melee und Fists ausgenommen)
-     * @returns true - der Spieler hat keine Waffe, false - der Spieler hat keine Waffe
+     * Returns whether the player is armed (excluding melee and fists)
+     * @returns true if armed, false otherwise
+     * @see [IsPedArmed](https://docs.fivem.net/natives/?_0x475768A975D5AD17) for more information.
      */
-    static get isArmed() : boolean {
+    static get isArmed(): boolean {
         return IsPedArmed(PlayerPedId(), 4 | 2);
+    }
+
+    /**
+     * Returns whether the player is dead
+     * @returns true if dead, false otherwise
+     * @see [IsEntityDead](https://docs.fivem.net/natives/?_0x5F9532F3) for more information.
+     */
+    static get isDead(): boolean {
+        return IsEntityDead(PlayerPedId());
+    }
+
+    /**
+     * Returns whether the player is aiming
+     * @returns true if aiming, false otherwise
+     * @see [IsPlayerFreeAiming](https://docs.fivem.net/natives/?_0x2E397FD2ECD37C87) for more information.
+     */
+    static get isAiming(): boolean {
+        return IsPlayerFreeAiming(PlayerId());
+    }
+
+    /**
+     * Returns whether the player is running
+     * @returns true if running, false otherwise
+     * @see [IsPedRunning](https://docs.fivem.net/natives/?_0xC5286FFC176F28A2) for more information.
+     */
+    static get isRunning(): boolean {
+        return IsPedRunning(PlayerPedId());
+    }
+
+    /**
+     * Returns whether the player is sprinting
+     * @returns true if sprinting, false otherwise
+     * @see [IsPedSprinting](https://docs.fivem.net/natives/?_0x57E457CD2C0FC168) for more information.
+     */
+    static get isSprinting(): boolean {
+        return IsPedSprinting(PlayerPedId());
+    }
+
+    // ==================== WANTED LEVEL ====================
+
+    /**
+     * Returns the wanted level of the player
+     * @returns The wanted level (0-5)
+     * @see [GetPlayerWantedLevel](https://docs.fivem.net/natives/?_0xE28E54788CE8F12D) for more information.
+     */
+    static get wantedLevel(): number {
+        return GetPlayerWantedLevel(PlayerId());
+    }
+
+    /**
+     * Sets the wanted level of the player
+     * @param level The wanted level (0-5)
+     * @see [SetPlayerWantedLevel](https://docs.fivem.net/natives/?_0x39FF19C64EF7DA5B) for more information.
+     */
+    static set wantedLevel(level: number) {
+        SetPlayerWantedLevel(PlayerId(), level, false);
+        SetPlayerWantedLevelNow(PlayerId(), false);
+    }
+
+    /**
+     * Clears the wanted level
+     */
+    public static clearWantedLevel(): void {
+        ClearPlayerWantedLevel(PlayerId());
+    }
+
+    /**
+     * Sets the maximum wanted level
+     * @param maxLevel The maximum wanted level (0-5)
+     * @see [SetMaxWantedLevel](https://docs.fivem.net/natives/?_0xAA5F02DB48D704B9) for more information.
+     */
+    public static setMaxWantedLevel(maxLevel: number): void {
+        SetMaxWantedLevel(maxLevel);
     }
 }

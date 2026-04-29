@@ -100,7 +100,7 @@ export class Utils {
      */
     public static GetEntityFromNetworkid(netId: number): number {
         if(!netId || !NetworkDoesEntityExistWithNetworkId(netId)) return -1;
-        const entityId = NetToObj(netId);
+        const entityId = NetworkGetEntityFromNetworkId(netId);
         if(entityId == 0 || !DoesEntityExist(entityId)) return -1;
         return entityId;
     }
